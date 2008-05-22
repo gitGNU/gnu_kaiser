@@ -3,7 +3,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-FILESYSTEMS = kfs
+FILESYSTEMS =
 
 all: fs
 

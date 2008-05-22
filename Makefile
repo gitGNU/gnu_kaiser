@@ -7,7 +7,7 @@ ARCH=$(shell uname -m | \
 	sed s/i.86/i386/)
 BUILTINS=lib/built-in.o kern/built-in.o
 INCLUDE=$(PWD)/include
-CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -Os -ffreestanding
+CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -O0 -ffreestanding
 ASFLAGS=$(CFLAGS)
 
 export ARCH INCLUDE CFLAGS ASFLAGS
