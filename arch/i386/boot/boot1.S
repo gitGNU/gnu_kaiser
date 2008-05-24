@@ -40,36 +40,36 @@ err:
 
 // Multiboot Information (filled in later according to MBI_FLAGS)
 mbi:
-mbi_flags:
-	.long MBI_FLAGS
-mbi_mem:
-	.long 0, 0
-mbi_boot_dev:
-	.long 0
-mbi_cmdline:
-	.long 0
-mbi_mods:
-	.long 0, 0
-mbi_syms:
-	.long 0, 0, 0
-mbi_mmap:
-	.long 0, 0
-mbi_drives:
-	.long 0, 0
-mbi_config:
-	.long 0
+	mbi_flags:
+		.long MBI_FLAGS
+	mbi_mem:
+		.long 0, 0
+	mbi_boot_dev:
+		.long 0
+	mbi_cmdline:
+		.long 0
+	mbi_mods:
+		.long 0, 0
+	mbi_syms:
+		.long 0, 0, 0
+	mbi_mmap:
+		.long 0, 0
+	mbi_drives:
+		.long 0, 0
+	mbi_config:
+		.long 0
 #ifdef LOADER_NAME
-mbi_name:
-	.long OFF(LOADER_NAME)
+	mbi_name:
+		.long OFF(LOADER_NAME)
 #else
-mbi_name:
-	.long 0
+	mbi_name:
+		.long 0
 #endif
-mbi_apm:
-	.long 0
-mbi_vbe:
-	.long 0, 0, 0
-	.word 0, 0, 0
+	mbi_apm:
+		.long 0
+	mbi_vbe:
+		.long 0, 0, 0
+		.word 0, 0, 0
 
 // The all powerful GDT, we'll just have a simple flat setup
 gdt:
