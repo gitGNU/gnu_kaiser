@@ -9,17 +9,24 @@ BUILTINS=lib/built-in.o kern/built-in.o
 INCLUDE=$(PWD)/include
 CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -O0 -ffreestanding
 ASFLAGS=$(CFLAGS)
+SYMLINK=ln -s
 
-export ARCH INCLUDE CFLAGS ASFLAGS
+export ARCH INCLUDE CFLAGS ASFLAGS SYMLINK
 
-all: arch/$(ARCH)/boot/kern.o
+all: bootstrap arch/$(ARCH)/boot/kern.o
 	$(MAKE) all   -C arch
 	$(MAKE) all   -C fs
+
+# Prepare the environment for building
+bootstrap:
+	$(MAKE) setarch -C include
+
 clean:
 	$(MAKE) clean -C lib
 	$(MAKE) clean -C arch
 	$(MAKE) clean -C kern
 	$(MAKE) clean -C fs
+	$(MAKE) clean -C include
 
 arch/$(ARCH)/boot/kern.o: $(BUILTINS)
 	$(CC) $(CFLAGS) -Wl,-r $^ -o $@
