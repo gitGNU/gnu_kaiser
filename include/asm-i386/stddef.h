@@ -23,4 +23,5 @@
 
 #define NULL	((void *) 0)
 
+typedef unsigned long uint32_t;
 #endif /* !__ASM_STDDEF_H__ */

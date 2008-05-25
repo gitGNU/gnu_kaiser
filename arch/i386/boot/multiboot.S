@@ -33,11 +33,11 @@ _start:
 // as multiboot compliant and load it
 mboot_hdr:
 	_mboot_magic:
-		.long MB_MAGIC
+		.long MULTIBOOT_HEADER_MAGIC
 	_mboot_flags:
-		.long MB_FLAGS
+		.long MULTIBOOT_HEADER_FLAGS
 	_mboot_cksum:
-		.long -(MB_MAGIC + MB_FLAGS)
+		.long -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
 
 copy_mbi:
 	// ebx should contain a pointer to the mbi struct
