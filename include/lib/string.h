@@ -21,7 +21,7 @@
 #ifndef __LIB_STRING_H__
 #define __LIB_STRING_H__
 
-int strlen (char *);
+unsigned int strlen (const char *);
 void *memset (void *, int, int);
 void *memcpy (void *, const void *, int);
 

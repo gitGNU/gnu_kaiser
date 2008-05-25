@@ -20,26 +20,24 @@
 
 #include <lib/string.h>
 
-int strlen (char *s) {
-	int i;
+unsigned int strlen (const char *s) {
+	char *p = s;
 
-	for (i = 0; s[i]; ++i);
-	return i;
+	while (*p) p++;
+	return p - s;
 }
 
 void *memset (void *_s, int c, int len) {
-	int i;
 	char *s = _s;
 
-	for (i = 0; i < len; ++i) s[i] = c;
-	return s;
+	for (; len; len--, s++) s = c;
+	return _s;
 }
 
 void *memcpy (void *_d, const void *_s, int len) {
-	int i;
 	char *d = _d;
 	const char *s = _s;
 
-	for (i = 0; i < len; ++i) d[i] = s[i];
+	for (; len; len--, d++)	d = s++;
 	return d;
 }
