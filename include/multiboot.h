@@ -20,7 +20,6 @@
 
 #ifndef __MULTIBOOT_H__
 #define __MULTIBOOT_H__
-#include <asm/stddef.h>
 #define MULTIBOOT_HEADER_MAGIC	0x1BADB002
 #define MULTIBOOT_HEADER_FLAGS	0x00000001
 #define MBIF_MEM	(1 << 0)	/* mbi_mem_lower and mbi_mem_higher */
@@ -28,6 +27,8 @@
 #define MBIF_NAME	(1 << 9)	/* mbi_name */
 #ifndef __ASM__
 /* non asm stuff goes here */
+
+#include <asm/stddef.h>
 
 typedef struct elf_section_header_table {
 	uint32_t num;
