@@ -36,10 +36,9 @@ void *memset (void *_s, int c, int len) {
 }
 
 void *memcpy (void *_d, const void *_s, int len) {
-	int i;
 	char *d = _d;
 	const char *s = _s;
 
-	for (i = 0; i < len; ++i) d[i] = s[i];
+	for (; len; len--, d++)	d = s++;
 	return d;
 }
