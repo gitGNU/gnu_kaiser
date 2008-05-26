@@ -22,7 +22,7 @@
 #define __LIB_STRING_H__
 
 unsigned int strlen (const char *);
-void *memset (void *, int, int);
+void *memset (void *, int, unsigned int);
 void *memcpy (void *, const void *, int);
 
 #endif /* __LIB_STRING_H__ */

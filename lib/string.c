@@ -21,16 +21,16 @@
 #include <lib/string.h>
 
 unsigned int strlen (const char *s) {
-	char *p = s;
+	const char *p = s;
 
 	while (*p) p++;
 	return p - s;
 }
 
-void *memset (void *_s, int c, int len) {
+void *memset (void *_s, int c, unsigned int len) {
 	char *s = _s;
 
-	for (; len; len--, s++) s = c;
+	for (; len; len--, s++) *s = c;
 	return _s;
 }
 
@@ -38,6 +38,6 @@ void *memcpy (void *_d, const void *_s, int len) {
 	char *d = _d;
 	const char *s = _s;
 
-	for (; len; len--, d++)	d = s++;
+	for (; len; len--, d++)	*d = *(s++);
 	return d;
 }

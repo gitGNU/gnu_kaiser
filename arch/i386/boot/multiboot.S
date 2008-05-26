@@ -21,67 +21,45 @@
 
 #define __ASM__
 #include <multiboot.h>
-#define OFF(x) (x-0xc0000000+0x100000)
+
+// Random stack size of 16KB
+#define STACK_SIZE 0x4000
 
 .globl _start
 
 _start:
-	jmp copy_mbi
+	jmp multiboot_entry
 
-// this is the multiboot header, for GRUB (or any other
-// multiboot compliant boot loader) to recognise our kernel
-// as multiboot compliant and load it
-mboot_hdr:
-	_mboot_magic:
-		.long MULTIBOOT_HEADER_MAGIC
-	_mboot_flags:
-		.long MULTIBOOT_HEADER_FLAGS
-	_mboot_cksum:
-		.long -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
+// Align 32 bits boundary
+.align 4
 
-copy_mbi:
-	// ebx should contain a pointer to the mbi struct
-	mov %ebx, %esi
-	mov OFF(multiboot_info), %edi
-	mov $mbi_sz, %ecx
-	mov %ds, %ax			// copying ds to es just to be sure
-	mov %ax, %es
-	rep
-	movsb
-	// copying the mbi should do for now, init will further process it later
-	// NOTE: jmp not call as we don't have a stack yet and don't need to ret
-	//	to here anyway
-	jmp init
+// Multiboot header for multiboot compliant bootloaders
+multiboot_header:
+	.long MULTIBOOT_HEADER_MAGIC
+	.long MULTIBOOT_HEADER_FLAGS
+	.long -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
 
-// multiboot information structure
-// provided by the bootloader
-.data
-.globl mutliboot_info
-multiboot_info:
-	_mbi_flags:
-		.long 0
-	_mbi_mem:
-		.long 0, 0
-	_mbi_boot_dev:
-		.long 0
-	_mbi_cmdline:
-		.long 0
-	_mbi_mods:
-		.long 0, 0
-	_mbi_syms:
-		.long 0, 0, 0
-	_mbi_mmap:
-		.long 0, 0
-	_mbi_drives:
-		.long 0, 0
-	_mbi_config:
-		.long 0
-	_mbi_name:
-		.long 0
-	_mbi_apm:
-		.long 0
-	_mbi_vbe:
-		.long 0, 0, 0
-		.word 0, 0, 0
-.set mbi_sz, . - multiboot_info
+multiboot_entry:
+	// Initialise stack pointer
+	movl $(stack + STACK_SIZE), %esp
+
+	// Reset EFLAGS
+	pushl $0
+	popf
+
+	////
+	// Push arguments for init() function onto the stack
+	////
+	pushl %ebx // Pointer to the multiboot info struct
+	pushl %eax // Magic value
+
+	// Enter C init() function
+	call init
+
+loop:
+	hlt
+	jmp loop
+
+// Stack area
+.comm stack, STACK_SIZE
 

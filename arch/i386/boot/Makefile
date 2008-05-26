@@ -4,14 +4,18 @@
 # notice and this notice are preserved.
 
 KERN=kaiser
-KERN_OBJS=multiboot.o init.o init_paging.o kern.o
+KERN_OBJS=multiboot.o init.o kern.o
 all: kernel
 clean:
 	$(RM) *.o *.bin $(KERN)
 
 kernel: $(KERN)
+
 kaiser: $(KERN_OBJS)
-	$(LD) -s -Ttext 0xc0001000 -e 0x101000 $^ -o $@
+	$(LD) -s $^ -o $@
+
 multiboot.o: multiboot.S $(INCLUDE)/multiboot.h
-init.o: init.S
+
+init.o: init.c
+
 kern.o:
