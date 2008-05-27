@@ -6,8 +6,11 @@
 OBJS=string.o
 
 all: built-in.o
+
 clean:
 	$(RM) *.o
+
 built-in.o: $(OBJS)
 	$(CC) $(CFLAGS) -Wl,-r $^ -o $@
+
 string.o: string.c $(INCLUDE)/lib/string.h

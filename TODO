@@ -1,4 +1,5 @@
 The items are roughly in the order in which they need to be done.
+ o Write linker script
  o IDT
  o GDT
  o Memory management
