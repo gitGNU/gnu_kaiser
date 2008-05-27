@@ -35,7 +35,7 @@ void vga_init(void) {
 	 * for the majority of systems. */
 	xpos = ypos = 0;
 	columns = 80;
-	lines = 24;
+	lines = 25;
 	video = (unsigned char *) 0xB8000;
 	attribute = 7;
 }
@@ -50,16 +50,21 @@ void vga_clear_screen(void) {
 }
 
 void vga_write_char(int c) {
-	if (xpos >= columns || c == '\n' || c == '\r') {
+	if (c == '\r') {
+		xpos = 0;
+		return;
+	}
+	if (xpos >= columns || c == '\n') {
 		xpos = 0;
 		ypos++;
 		if (ypos >= lines)
 			ypos = 0;
+		if (c == '\n')
+			return;
 	}
-	else {
-		*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
-		*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
-		xpos++;
-	}
+
+	*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
+	*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
+	xpos++;
 }
 
