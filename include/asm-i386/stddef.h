@@ -30,6 +30,12 @@ typedef short int16_t;
 typedef unsigned short uint16_t;
 typedef long int32_t;
 typedef unsigned long uint32_t;
+typedef unsigned char bool_t;
+
+enum {
+	true = 1,
+	false = 0
+};
 
 #endif /* !__ASM_STDDEF_H__ */
 
