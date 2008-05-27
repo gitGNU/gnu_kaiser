@@ -1,5 +1,5 @@
 // multiboot.S - multiboot information processing and header for bootloader
-// Copyright (C) 2008 John 'Ykstort' Doyle
+// Copyright (C) 2008 Oliver 'Ignite' Heard & Andrew 'Seadog' Etches
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
