@@ -1,5 +1,5 @@
 /*
- * vga.h - VGA driver
+ * kprintf.c - Print to the display when in text mode.
  *
  * Copyright (C) 2008 Oliver 'Ignite' Heard
  *
@@ -16,13 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
+ */ 
 
-#ifndef __VGA_H__
-#define __VGA_H__
+#include <lib/kprintf.h>
+#include <vga.h>
 
-void vga_init(void);
-void vga_clear_screen(void);
-void vga_write_char(int);
+void kprintf(const char *fmt, ...)
+{
+	char *p = fmt;
+	char **args = (char **) &fmt;
+	int c;
+	args++;
 
-#endif /* __VGA_H__ */
+	while ((c = *p++) != '\0') {
+		if ((c == '%' && *(p + 1) == '%') || c != '%') {
+			vga_write_char(c);
+			if (*(p + 1) == '%')
+				*p++;
+			continue;
+		}
+		else {
+		}
+	}
+}
+

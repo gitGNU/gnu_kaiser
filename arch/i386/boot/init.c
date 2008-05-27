@@ -20,15 +20,19 @@
 
 #include <multiboot.h>
 #include <vga.h>
+#include <lib/kprintf.h>
 
 #define CHECK_FLAG(flags,bit) ((flags) & (1<<(bit)))
 
 void init(unsigned long magic, unsigned long addr) {
 	multiboot_info_t *mbi;
+	int i;
 	mbi = (multiboot_info_t *)addr;
 
 	/* Initialise the VGA system and clear the screen */
 	vga_init();
 	vga_clear_screen();
+	for (i = 0; i < 81; i++)
+		vga_write_char('@');
 }
 

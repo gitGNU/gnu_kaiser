@@ -25,10 +25,11 @@ static uint16_t ypos;			/* Current Y position */
 static uint16_t columns;		/* Number of columns */
 static uint16_t lines;			/* Number of lines */
 static volatile unsigned char *video;	/* Video memory address */
+static unsigned char attribute;		/* Attribute byte used to write the
+					 * next character. */
 
 /* Initialise the VGA system */
-void vga_init(void)
-{
+void vga_init(void) {
 	/* TODO: We need to probe the hardware to find appropriate values for
 	 * all this stuff. For now, we just enter some values that should work
 	 * for the majority of systems. */
@@ -36,11 +37,11 @@ void vga_init(void)
 	columns = 80;
 	lines = 24;
 	video = (unsigned char *) 0xB8000;
+	attribute = 7;
 }
 
 /* Clear the screen contents are reset x and y positions. */
-void vga_clear_screen(void)
-{
+void vga_clear_screen(void) {
 	int i;
 
 	for (i = 0; i < (columns * lines); i++)
@@ -48,4 +49,17 @@ void vga_clear_screen(void)
 	xpos = ypos = 0;
 }
 
+void vga_write_char(int c) {
+	if (xpos >= columns || c == '\n' || c == '\r') {
+		xpos = 0;
+		ypos++;
+		if (ypos >= lines)
+			ypos = 0;
+	}
+	else {
+		*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
+		*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
+		xpos++;
+	}
+}
 

@@ -3,7 +3,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-OBJS=string.o
+OBJS=string.o kprintf.o
 
 all: built-in.o
 
@@ -14,3 +14,5 @@ built-in.o: $(OBJS)
 	$(CC) $(CFLAGS) -Wl,-r $^ -o $@
 
 string.o: string.c $(INCLUDE)/lib/string.h
+kprintf.o: kprintf.c
+
