@@ -1,5 +1,5 @@
 /*
- * scheduler.h - kernel task scheduler
+ * init.c - C entry point
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *

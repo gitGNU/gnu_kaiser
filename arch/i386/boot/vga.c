@@ -43,8 +43,9 @@ void vga_clear_screen(void)
 {
 	int i;
 
-	for (i = 0; i < (columns * lines * 2); i++)
+	for (i = 0; i < (columns * lines); i++)
 		*(video + i) = 0;
 	xpos = ypos = 0;
 }
+
 
