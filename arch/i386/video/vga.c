@@ -66,10 +66,15 @@ void vga_write_char(int c) {
 		if (c == '\n')
 			return;
 	}
-
 	if (c == '\t')
-		for (i = 0; i < TAB_SIZE; i++)
+		while (xpos % TAB_SIZE) {
+			if (columns - xpos < TAB_SIZE) {
+				xpos = 0;
+				ypos++;
+				break;
+			}
 			vga_write_char(' ');
+		}
 	else {
 		*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
 		*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
