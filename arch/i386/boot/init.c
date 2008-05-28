@@ -31,7 +31,10 @@ void init(unsigned long magic, unsigned long addr) {
 
 	/* Initialise the VGA system and clear the screen */
 	vga_init();
+	vga_set_foreground_colour(VGA_COLOUR_BROWN);
+	vga_set_background_colour(VGA_COLOUR_BLACK);
 	vga_clear_screen();
+
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
 	/*test GDT*/

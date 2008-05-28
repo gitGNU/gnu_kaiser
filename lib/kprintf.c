@@ -22,7 +22,7 @@
 #include <vga.h>
 
 void kprintf(const char *fmt, ...) {
-	char *p = fmt;
+	const char *p = fmt;
 	char **args = (char **) &fmt;
 	int c;
 	args++;

@@ -39,7 +39,7 @@ void vga_init(void) {
 	columns = 80;
 	lines = 25;
 	video = (unsigned char *) 0xB8000;
-	attribute = 7;
+	attribute = 0;
 }
 
 /* Clear the screen contents are reset x and y positions. */
@@ -95,5 +95,20 @@ int vga_set_char(int c, uint16_t x, uint16_t y) {
 	*(video + (x + y * columns) * 2) = c & 0xFF;
 	*(video + (x + y * columns) * 2 + 1) = attribute;
 	return 1;
+}
+
+void vga_set_foreground_colour(uint8_t colour) {
+	colour &= 017;		/* clear the first 4 bits of colour */
+	attribute &= 0360;	/* clear the last 4 bits of attribute */
+	attribute |= colour;	/* assign the last 4 bits of colour to the last
+				 * 4 bits of attribute */
+}
+
+void vga_set_background_colour(uint8_t colour) {
+	colour <<= 4;		/* move the value to where we need it */
+	colour &= 0360;		/* clear the last 4 bits of colour */
+	attribute &= 017;	/* clear the first 4 bits of attribute */
+	attribute |= colour;	/* assign the first 4 bits of colour to the
+				 * first 4 bits of attribute */
 }
 
