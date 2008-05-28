@@ -35,4 +35,4 @@ lib/built-in.o:
 kern/built-in.o:
 	$(MAKE) all -C kern
 arch/$(ARCH)/video/built-in.o:
-	$(MAKE) all -C arch/i386/video
+	$(MAKE) all -C arch/$(ARCH)/video
