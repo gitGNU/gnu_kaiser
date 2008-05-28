@@ -1,5 +1,5 @@
 /*
- * init.c - C entry point
+ * gdt.h - GDT structs and function declarations
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,25 +18,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <multiboot.h>
-#include <vga.h>
-#include <lib/kprintf.h>
+#ifndef __GDT_H__
+# define __GDT_H__
+/*
+ * A GDT entry, containing the info we'll push
+ * onto the processor during initialisation.
+ */
+struct gdt_entry {
+	unsigned short limit_low;
+	unsigned short base_low;
+	unsigned char base_middle;
+	unsigned char access;
+	unsigned char granularity;
+	unsigned char base_high;
+} __attribute__((packed)); /*prevent compiler optimisation*/
 
-#define CHECK_FLAG(flags,bit) ((flags) & (1<<(bit)))
+struct gdt_ptr {
+	unsigned short limit;
+	unsigned int base;
+} __attribute__((packed)); /*prevent compiler optimisation*/
 
-void init(unsigned long magic, unsigned long addr) {
-	multiboot_info_t *mbi;
-	int i;
-	mbi = (multiboot_info_t *)addr;
+typedef struct gdt_entry gdt_entry_t;
+typedef struct gdt_ptr   gdt_ptr_t;
 
-	/* Initialise the VGA system and clear the screen */
-	vga_init();
-	vga_clear_screen();
-	kprintf("Loading Kaiser...\n");
-	kprintf("Initialising components...\n");
-	/*test GDT*/
-	kprintf("Initialising GDT:\t");
-	gdt_install();
-	kprintf("[ok]\n");
-}
-
+extern void gdt_flush();
+void gdt_install();
+void gdt_set_gate(int, unsigned long, unsigned long, unsigned char, unsigned char);
+#endif

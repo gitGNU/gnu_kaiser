@@ -1,5 +1,5 @@
 /*
- * init.c - C entry point
+ * gdt2.S - GDT loading function
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,25 +18,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <multiboot.h>
-#include <vga.h>
-#include <lib/kprintf.h>
-
-#define CHECK_FLAG(flags,bit) ((flags) & (1<<(bit)))
-
-void init(unsigned long magic, unsigned long addr) {
-	multiboot_info_t *mbi;
-	int i;
-	mbi = (multiboot_info_t *)addr;
-
-	/* Initialise the VGA system and clear the screen */
-	vga_init();
-	vga_clear_screen();
-	kprintf("Loading Kaiser...\n");
-	kprintf("Initialising components...\n");
-	/*test GDT*/
-	kprintf("Initialising GDT:\t");
-	gdt_install();
-	kprintf("[ok]\n");
-}
-
+.global gdt_flush
+.extern gp
+gdt_flush:
+	lgdt (gp)
+	mov $0x10, %ax
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %ax, %ss
+	jmp flush2
+flush2:
+	ret
