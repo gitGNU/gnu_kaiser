@@ -20,6 +20,8 @@
 #include <vga.h>
 #include <asm/stddef.h> /* XXX: stddef.h may not reside in asm in the future */
 
+#define TAB_SIZE 8 /* XXX: This could possibly be made dynamic */
+
 static uint16_t xpos;			/* Current X position */
 static uint16_t ypos;			/* Current Y position */
 static uint16_t columns;		/* Number of columns */
@@ -50,6 +52,8 @@ void vga_clear_screen(void) {
 }
 
 void vga_write_char(int c) {
+	int i;
+
 	if (c == '\r') {
 		xpos = 0;
 		return;
@@ -63,8 +67,13 @@ void vga_write_char(int c) {
 			return;
 	}
 
-	*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
-	*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
-	xpos++;
+	if (c == '\t')
+		for (i = 0; i < TAB_SIZE; i++)
+			vga_write_char(' ');
+	else {
+		*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
+		*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
+		xpos++;
+	}
 }
 

@@ -32,7 +32,6 @@ void init(unsigned long magic, unsigned long addr) {
 	/* Initialise the VGA system and clear the screen */
 	vga_init();
 	vga_clear_screen();
-	for (i = 0; i < 80; i++)
-		vga_write_char('@');
+	kprintf("hai\tbob");
 }
 

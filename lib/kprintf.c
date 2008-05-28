@@ -21,8 +21,7 @@
 #include <lib/kprintf.h>
 #include <vga.h>
 
-void kprintf(const char *fmt, ...)
-{
+void kprintf(const char *fmt, ...) {
 	char *p = fmt;
 	char **args = (char **) &fmt;
 	int c;
@@ -34,9 +33,15 @@ void kprintf(const char *fmt, ...)
 			if (*(p + 1) == '%')
 				*p++;
 			continue;
-		}
+		}/*
 		else {
-		}
+			c = *p++;
+			switch (c) {
+			case 'd':
+			case 'i':
+				
+			}
+		}*/
 	}
 }
 
