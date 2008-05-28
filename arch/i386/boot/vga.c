@@ -98,16 +98,15 @@ int vga_set_char(int c, uint16_t x, uint16_t y) {
 }
 
 void vga_set_foreground_colour(uint8_t colour) {
-	colour &= 017;		/* clear the first 4 bits of colour */
-	attribute &= 0360;	/* clear the last 4 bits of attribute */
-	attribute |= colour;	/* assign the last 4 bits of colour to the last
-				 * 4 bits of attribute */
+	colour &= 0x0F;		/* clear the first 4 bits of colour */
+	attribute &= 0xF0;	/* clear the last 4 bits of attribute */
+	attribute |= colour;	/* assign the last 4 bits of colour to the last */
 }
 
 void vga_set_background_colour(uint8_t colour) {
 	colour <<= 4;		/* move the value to where we need it */
-	colour &= 0360;		/* clear the last 4 bits of colour */
-	attribute &= 017;	/* clear the first 4 bits of attribute */
+	colour &= 0xF0;		/* clear the last 4 bits of colour */
+	attribute &= 0x0F;	/* clear the first 4 bits of attribute */
 	attribute |= colour;	/* assign the first 4 bits of colour to the
 				 * first 4 bits of attribute */
 }
