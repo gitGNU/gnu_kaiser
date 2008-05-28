@@ -7,3 +7,4 @@ all:
 	$(MAKE) all -C boot
 clean:
 	$(MAKE) clean -C boot
+	$(MAKE) clean -C video
