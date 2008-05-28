@@ -21,8 +21,12 @@
 #ifndef __VGA_H__
 #define __VGA_H__
 
+#include <asm/stddef.h>
+
 void vga_init(void);
 void vga_clear_screen(void);
 void vga_write_char(int);
+int vga_set_pos(uint16_t, uint16_t);
+int vga_set_char(int, uint16_t, uint16_t);
 
 #endif /* __VGA_H__ */

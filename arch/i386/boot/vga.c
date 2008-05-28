@@ -77,3 +77,23 @@ void vga_write_char(int c) {
 	}
 }
 
+/* Set the position to write to next on screen.
+ * Returns 1 if successful, 0 if x or y (or both), are out of range. */
+int vga_set_pos(uint16_t x, uint16_t y) {
+	if (x > columns || y > lines)
+		return 0;
+	xpos = x;
+	ypos = y;
+	return 1;
+}
+
+/* Write a char to a specific location on screen.
+ * Returns 1 if successful, 0 if x or y (or both), are out of range. */
+int vga_set_char(int c, uint16_t x, uint16_t y) {
+	if (x > columns || y > lines)
+		return 0;
+	*(video + (x + y * columns) * 2) = c & 0xFF;
+	*(video + (x + y * columns) * 2 + 1) = attribute;
+	return 1;
+}
+
