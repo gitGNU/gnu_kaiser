@@ -19,9 +19,9 @@
  */
 
 .global gdt_flush
-.extern gp
+.extern gdt_pointer
 gdt_flush:
-	lgdt (gp)
+	lgdt (gdt_pointer)
 	mov $0x10, %ax
 	mov %ax, %ds
 	mov %ax, %es
