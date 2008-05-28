@@ -1,5 +1,5 @@
 /*
- * gdt.c - GDT initialisation code
+ * gdt1.c - GDT initialisation code
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -36,7 +36,7 @@ void gdt_set_gate(int num, unsigned long base, unsigned long limit,
 
 void gdt_install(){
 	gp.limit = (sizeof(gdt_entry_t) * 3) - 1;
-	gp.base = &gdt;
+	gp.base = (unsigned int)&gdt;
 	gdt_set_gate(0, 0, 0, 0, 0);
 	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
