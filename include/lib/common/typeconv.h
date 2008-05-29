@@ -1,7 +1,7 @@
 /*
- * stddef.h - standard architecture-dependant definitions
+ * typeconv.h - commonly used type conversion code
  *
- * Copyright (C) 2008 Andrew 'Seadog' Etches
+ * Copyright (C) 2008 Oliver 'Ignite' Heard
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */ 
 
-#ifndef __ASM_STDDEF_H__
-#define __ASM_STDDEF_H__
+#ifndef __TYPECONV_H__
+#define __TYPECONV_H__
 
-#define NULL	((void *) 0)
+#include <asm/stddef.h>
 
-/* Common data types */
-typedef char int8_t;
-typedef unsigned char uint8_t;
-typedef short int16_t;
-typedef unsigned short uint16_t;
-typedef long int32_t;
-typedef unsigned long uint32_t;
-typedef unsigned long size_t;
-typedef long ssize_t;
+int int_to_ascii(char *buf, size_t buflen, int base, int32_t num);
 
-#endif /* !__ASM_STDDEF_H__ */
+#endif /* !__TYPECONV_H__ */
 

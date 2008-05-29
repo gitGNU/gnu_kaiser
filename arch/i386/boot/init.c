@@ -26,7 +26,7 @@
 
 void init(unsigned long magic, unsigned long addr) {
 	multiboot_info_t *mbi;
-	int i;
+	char buf[4];
 	mbi = (multiboot_info_t *)addr;
 
 	/* Initialise the VGA system and clear the screen */

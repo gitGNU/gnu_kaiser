@@ -1,23 +1,17 @@
-# Copyright (C) 2008 John 'Ykstort' Doyle
+# Copyright (C) 2008 Oliver 'Ignite' Heard
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-OBJS=string.o kprintf.o common.o
+OBJS=typeconv.o
 
-all: built-in.o
+all: ../common.o
 
 clean:
 	$(RM) *.o
-	$(MAKE) clean -C common
 
-built-in.o: $(OBJS)
+../common.o: $(OBJS)
 	$(CC) $(CFLAGS) -Wl,-r $^ -o $@
 
-string.o: string.c $(INCLUDE)/lib/string.h
-
-kprintf.o: kprintf.c
-
-common.o:
-	$(MAKE) all -C common
+typeconv.o: typeconv.c
 
