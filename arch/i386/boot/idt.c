@@ -33,7 +33,7 @@ void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags){
 
 void idt_install(){
 	idt_pointer.limit = sizeof(idt_entry_t) * 256 - 1;
-	idt_pointer.base = (int32_t)&idt;
+	idt_pointer.base = (uint32_t)&idt;
 	memset(&idt, 0, sizeof(idt_entry_t)*256);
 
 	/* load some ISRs here */
