@@ -21,8 +21,12 @@
 #include <multiboot.h>
 #include <vga.h>
 #include <lib/kprintf.h>
+#include <gdt.h>
+#include <idt.h>
 
-#define CHECK_FLAG(flags,bit) ((flags) & (1<<(bit)))
+#define PRINT_COLOUR_CHANGE(msg, start, delta) vga_set_foreground_colour(delta);\
+			     kprintf(msg);\
+			     vga_set_foreground_colour(start)
 
 void init(unsigned long magic, unsigned long addr) {
 	multiboot_info_t *mbi;
@@ -37,9 +41,13 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
-	/*test GDT*/
+
 	kprintf("Initialising GDT:\t");
 	gdt_install();
-	kprintf("[ok]\n");
+	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+
+	kprintf("Initialising IDT:\t");
+	idt_install();
+	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
 }
 
