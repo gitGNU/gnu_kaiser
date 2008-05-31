@@ -19,23 +19,24 @@
  */
 
 #ifndef __GDT_H__
-# define __GDT_H__
+#define __GDT_H__
+#include <asm/stddef.h>
 /*
  * A GDT entry, containing the info we'll push
  * onto the processor during initialisation.
  */
 struct gdt_entry {
-	unsigned short limit_low;
-	unsigned short base_low;
-	unsigned char base_middle;
-	unsigned char access;
-	unsigned char granularity;
-	unsigned char base_high;
+	uint16_t limit_low;
+	uint16_t base_low;
+	uint8_t base_middle;
+	uint8_t access;
+	uint8_t granularity;
+	uint8_t base_high;
 } __attribute__((packed)); /*prevent compiler optimisation*/
 
 struct gdt_ptr {
-	unsigned short limit;
-	unsigned int base;
+	uint16_t limit;
+	uint32_t base;
 } __attribute__((packed)); /*prevent compiler optimisation*/
 
 typedef struct gdt_entry gdt_entry_t;
@@ -43,5 +44,5 @@ typedef struct gdt_ptr   gdt_ptr_t;
 
 extern void gdt_flush();
 void gdt_install();
-void gdt_set_gate(int, unsigned long, unsigned long, unsigned char, unsigned char);
+void gdt_set_gate(int32_t, uint32_t, uint32_t, uint8_t, uint8_t);
 #endif

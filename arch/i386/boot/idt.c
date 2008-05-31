@@ -23,8 +23,7 @@
 idt_entry_t idt[256];
 idt_ptr_t idt_pointer;
 
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel,
-		  unsigned char flags){
+void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags){
 	idt[num].sel     = sel;
 	idt[num].always0 = 0x00;
 	idt[num].flags   = flags;
@@ -34,7 +33,7 @@ void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel,
 
 void idt_install(){
 	idt_pointer.limit = sizeof(idt_entry_t) * 256 - 1;
-	idt_pointer.base = (int)&idt;
+	idt_pointer.base = (int32_t)&idt;
 	memset(&idt, 0, sizeof(idt_entry_t)*256);
 
 	/* load some ISRs here */
