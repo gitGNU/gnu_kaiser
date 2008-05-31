@@ -14,8 +14,8 @@ SYMLINK=ln -s
 export ARCH INCLUDE CFLAGS ASFLAGS SYMLINK
 
 all: bootstrap arch/$(ARCH)/boot/kern.o
-	$(MAKE) all   -C arch
 	$(MAKE) all   -C fs
+	$(MAKE) all   -C arch
 
 # Prepare the environment for building
 bootstrap:

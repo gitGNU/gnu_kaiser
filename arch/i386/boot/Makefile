@@ -4,7 +4,7 @@
 # notice and this notice are preserved.
 
 KERN=kaiser
-KERN_OBJS=multiboot.o init.o kern.o gdt.o load.o
+KERN_OBJS=multiboot.o init.o kern.o gdt.o idt.o load.o
 all: kernel
 clean:
 	$(RM) *.o *.bin $(KERN)
@@ -19,6 +19,8 @@ multiboot.o: multiboot.S $(INCLUDE)/multiboot.h
 init.o: init.c
 
 gdt.o: gdt.c
+
+idt.o: idt.c
 
 load.o: load.S
 

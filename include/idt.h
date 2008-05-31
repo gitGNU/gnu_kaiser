@@ -1,5 +1,5 @@
 /*
- * load.S - GDT/IDT loading functions
+ * idt.h - IDT initialisation header
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,19 +18,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-.global gdt_flush, idt_load
-.extern gdt_pointer, idt_pointer
-gdt_flush:
-	lgdt (gdt_pointer)
-	mov $0x10, %ax
-	mov %ax, %ds
-	mov %ax, %es
-	mov %ax, %fs
-	mov %ax, %gs
-	mov %ax, %ss
-	/* We need a far jump here! */
-	ret
+#ifndef __IDT_H__
+#define __IDT_H__
 
-idt_load:
-	lidt (idt_pointer)
-	ret
+struct idt_entry {
+	unsigned short base_lo;
+	unsigned short sel;
+	unsigned char always0;
+	unsigned char flags;
+	unsigned short base_hi;
+} __attribute__((packed));
+
+struct idt_ptr {
+	unsigned short limit;
+	unsigned int base;
+} __attribute__((packed));
+
+typedef struct idt_entry idt_entry_t;
+typedef struct idt_ptr idt_ptr_t;
+
+extern void idt_load();
+void idt_set_gate(unsigned char, unsigned long, unsigned short sel, unsigned char flags);
+void idt_install();
+
+#endif

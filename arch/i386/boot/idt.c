@@ -1,5 +1,5 @@
 /*
- * load.S - GDT/IDT loading functions
+ * idt.c - IDT initialisation code
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,19 +18,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-.global gdt_flush, idt_load
-.extern gdt_pointer, idt_pointer
-gdt_flush:
-	lgdt (gdt_pointer)
-	mov $0x10, %ax
-	mov %ax, %ds
-	mov %ax, %es
-	mov %ax, %fs
-	mov %ax, %gs
-	mov %ax, %ss
-	/* We need a far jump here! */
-	ret
+#include <idt.h>
 
-idt_load:
-	lidt (idt_pointer)
-	ret
+idt_entry_t idt[256];
+idt_ptr_t idt_pointer;
+
+void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel,
+		  unsigned char flags){
+	idt[num].sel     = sel;
+	idt[num].always0 = 0x00;
+	idt[num].flags   = flags;
+	idt[num].base_lo = (base & 0xFFFF); /* bottom 16 bits */
+	idt[num].base_hi = (base >> 16) & 0xFFFF; /* top 16 bits */
+}
+
+void idt_install(){
+	idt_pointer.limit = sizeof(idt_entry_t) * 256 - 1;
+	idt_pointer.base = (int)&idt;
+	memset(&idt, 0, sizeof(idt_entry_t)*256);
+
+	/* load some ISRs here */
+
+	idt_load();
+}
