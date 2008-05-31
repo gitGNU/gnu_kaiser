@@ -23,6 +23,7 @@
 #include <lib/kprintf.h>
 #include <gdt.h>
 #include <idt.h>
+#include <isr.h>
 
 #define PRINT_COLOUR_CHANGE(msg, start, delta) vga_set_foreground_colour(delta);\
 			     kprintf(msg);\
@@ -49,5 +50,11 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("Initialising IDT:\t");
 	idt_install();
 	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+
+	kprintf("Initialising ISRs:\t");
+	isr_install();
+	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+
+	kprintf(1/0); /* Let's cause a fault! */
 }
 
