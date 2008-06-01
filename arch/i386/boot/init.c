@@ -54,5 +54,9 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("Initialising ISRs:\t");
 	isr_install();
 	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+
+	kprintf("Initialising IRQs:\t");
+	irq_install();
+	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
 }
 
