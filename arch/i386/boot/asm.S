@@ -221,3 +221,107 @@ isr_common: /* all we do here is build out lovely struct for fault_handler */
 	popa
 	add $8, %esp
 	iret
+
+/* IRQ time */
+.global irq0,  irq1,  irq2,  irq3,  irq4,  irq5, irq6, irq7, irq8, irq9
+.global irq10, irq11, irq12, irq13, irq14, irq15
+
+irq0:
+        cli
+        push $0
+        push $32
+        jmp irq_common
+irq1:
+        cli
+        push $0
+        push $33
+        jmp irq_common
+irq2:
+        cli
+        push $0
+        push $33
+        jmp irq_common
+irq3:
+        cli
+        push $0
+        push $34
+        jmp irq_common
+irq4:
+        cli
+        push $0
+        push $35
+        jmp irq_common
+irq5:
+        cli
+        push $0
+        push $36
+        jmp irq_common
+irq7:
+        cli
+        push $0
+        push $37
+        jmp irq_common
+irq8:
+        cli
+        push $0
+        push $38
+        jmp irq_common
+irq9:
+        cli
+        push $0
+        push $39
+        jmp irq_common
+irq10:
+        cli
+        push $0
+        push $40
+        jmp irq_common
+irq11:
+        cli
+        push $0
+        push $41
+        jmp irq_common
+irq12:
+        cli
+        push $0
+        push $42
+        jmp irq_common
+irq13:
+        cli
+        push $0
+        push $43
+        jmp irq_common
+irq14:
+        cli
+        push $0
+        push $44
+        jmp irq_common
+irq15:
+        cli
+        push $0
+        push $45
+        jmp irq_common
+
+.extern irq_handler
+irq_common: /* same as the ISR version but calling a different routine... */
+	pusha
+	push %ds
+	push %es
+	push %fs
+	push %gs
+	mov $0x10, %ax
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %fs
+	mov %ax, %gs
+	mov %esp, %eax
+	push %eax
+	call irq_handler
+	pop %eax
+	pop %gs
+	pop %fs
+	pop %es
+	pop %ds
+	popa
+	add $8, %esp
+	iret
