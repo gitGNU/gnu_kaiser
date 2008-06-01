@@ -19,29 +19,42 @@
  */ 
 
 #include <lib/kprintf.h>
+#include <lib/common.h>
 #include <vga.h>
 
 void kprintf(const char *fmt, ...) {
 	const char *p = fmt;
 	char **args = (char **) &fmt;
-	int c;
+	char c;
 	args++;
 
 	while ((c = *p++) != '\0') {
-		if ((c == '%' && *(p + 1) == '%') || c != '%') {
+		if (c != '%') {
 			vga_write_char(c);
-			if (*(p + 1) == '%')
-				*p++;
-			continue;
-		}/*
+		}
 		else {
+			char buf[256];
+			int iarg;
+			char *sarg;
 			c = *p++;
 			switch (c) {
 			case 'd':
 			case 'i':
-				
+				iarg = (int) *args;
+				int_to_ascii(iarg, 256, 10, iarg);
+				kprintf(iarg);
+				args++;
+				break;
+			case '%':
+				vga_write_char(c);
+				break;
+			case 's':
+				sarg = (char *) *args;
+				kprintf(sarg);
+				args++;
+				break;
 			}
-		}*/
+		}
 	}
 }
 
