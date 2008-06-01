@@ -1,5 +1,5 @@
 /*
- * asm.S - GDT/IDT loading functions and ISR code
+ * asm.S - GDT/IDT loading functions and ISR/IRQ code
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
