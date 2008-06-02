@@ -24,15 +24,17 @@
 #include <irq.h>
 
 unsigned char keyboard_map[128] = {
-        0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
-        '\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
-        0, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '#', /* first char ctrl */
-        0, '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', /* first char left shift */
-        0 /*right shift*/, '*',
-        0/*alt*/, ' ', 0 /*caps*/, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 /*f1->f10*/,
-        0/*num lock*/, 0/*scroll lock*/, 0/*home*/, 0/*up*/, 0/*pg up*/, '-', 0/*left*/,
-        0, 0/*right*/, '+', 0/*end*/, 0/*down*/, 0/*pg down*/, 0/*ins*/, 0/*del*/, 0, 0, 0,
-        0, 0/*f11,f12*/, 0,/*all else undef'd*/
+	KB_ERROR, KB_ESCAPE,
+	'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
+	'\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
+	KB_LEFT_CONTROL,
+	'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '#',
+	KB_LEFT_SHIFT, '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', KB_RIGHT_SHIFT,
+	'*', KB_LEFT_ALT, ' ', KB_CAPS_LOCK,
+	KB_F1, KB_F2, KB_F3, KB_F4, KB_F5, KB_F6, KB_F7, KB_F8, KB_F9, KB_F10,
+	KB_NUM_LOCK, KB_SCROLL_LOCK, KB_HOME, KB_UP, KB_PAGE_UP, '-',
+	KB_LEFT, KB_5, KB_RIGHT, '+', KB_END, KB_DOWN, KB_PAGE_DOWN, KB_INS,
+	KB_DEL, KB_ALT_SYSRQ, 0, KB_BLANK, KB_F11, KB_F12,
 };
 
 void keyboard_handler(stack_rep_t *rep){
