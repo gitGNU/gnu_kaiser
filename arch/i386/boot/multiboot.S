@@ -56,8 +56,6 @@ multiboot_entry:
 	// Enter C init() function
 	call init
 
-	hlt
-
 // Stack area
 .comm stack, STACK_SIZE
 

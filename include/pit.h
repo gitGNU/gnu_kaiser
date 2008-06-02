@@ -1,5 +1,5 @@
 /*
- * kb.h - keyboard driver header
+ * pit.h - PIT driver header
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,31 +18,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __KB_H__
-#  define __KB_H__
-
-#define P_CAPSLOCK(status)	((status)&0x80 ? 1:0)
+#ifndef __PIT_H__
+#define __PIT_H__
 #include <isr.h>
 #include <asm/stddef.h>
 
-struct keyboard_status {
-	/*
-	 * Any keys which have memory need to be kept track of
-	 *
-	 * uint16_t status bits:
-	 * 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
-	 *
-	 * 0,1,2 = {caps,num,scroll}lock
-	 * 3,4   = left/right shift
-	 * 5,6   = left/right ctrl
-	 * 7     = alt
-	 * 8     = super
-	 *
-	 */
-	uint16_t status;
-};
+#define WANTED_FREQUENCY 100  /* 100Hz */
+#define PIT_FREQUENCY 1193180 /* I didn't invent them... */
+#define PIT_COMMAND_REGISTER 0x43
+#define PIT_CHANNEL1 0x40
+#define PIT_CHANNEL2 0x41
+#define PIT_CHANNEL3 0x42
 
-void keyboard_handler(stack_rep_t *);
-void keyboard_install();
+void timer_install();
+void timer_handler(stack_rep_t *);
 
 #endif

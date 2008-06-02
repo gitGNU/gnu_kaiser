@@ -1,5 +1,5 @@
 /*
- * kb.h - keyboard driver header
+ * pit.c - PIT driver
  *
  * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
@@ -18,31 +18,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __KB_H__
-#  define __KB_H__
-
-#define P_CAPSLOCK(status)	((status)&0x80 ? 1:0)
 #include <isr.h>
 #include <asm/stddef.h>
+#include <irq.h>
+#include <pit.h>
+#include <lib/kprintf.h>
 
-struct keyboard_status {
-	/*
-	 * Any keys which have memory need to be kept track of
-	 *
-	 * uint16_t status bits:
-	 * 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
-	 *
-	 * 0,1,2 = {caps,num,scroll}lock
-	 * 3,4   = left/right shift
-	 * 5,6   = left/right ctrl
-	 * 7     = alt
-	 * 8     = super
-	 *
-	 */
-	uint16_t status;
-};
+int pit_ticks = 0;
 
-void keyboard_handler(stack_rep_t *);
-void keyboard_install();
+void timer_handler(stack_rep_t *r){
+	pit_ticks++;
+	if(!(pit_ticks%100)){
+		kprintf("%d seconds passed\r", pit_ticks/100);
+	}
+}
 
-#endif
+void timer_install(){
+	uint32_t time = PIT_FREQUENCY / WANTED_FREQUENCY;  /* Inaccuracy in division! */
+	send_byte(PIT_COMMAND_REGISTER, 0x36); /*generates a square wave without sending BCD data*/
+	send_byte(PIT_CHANNEL1, time & 0xFF);
+	send_byte(PIT_CHANNEL1, (time >> 8));
+	irq_create_handler(0, timer_handler);
+}
+
