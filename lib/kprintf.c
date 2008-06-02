@@ -41,8 +41,8 @@ void kprintf(const char *fmt, ...) {
 			case 'd':
 			case 'i':
 				iarg = (int) *args;
-				int_to_ascii(iarg, 256, 10, iarg);
-				kprintf(iarg);
+				int_to_ascii(buf, 256, 10, iarg);
+				kprintf(buf);
 				args++;
 				break;
 			case '%':
