@@ -25,6 +25,7 @@
 #include <idt.h>
 #include <isr.h>
 #include <pit.h>
+#include <kb.h>
 
 #define PRINT_COLOUR_CHANGE(msg, start, delta) vga_set_foreground_colour(delta);\
 			     kprintf(msg);\
@@ -62,6 +63,10 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Installing system clock:\t");
 	timer_install();
+	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+
+	kprintf("Installing keyboard:\t");
+	keyboard_install();
 	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
 	
 	__asm__ __volatile__("sti");
