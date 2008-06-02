@@ -22,6 +22,15 @@
 #include <lib/common.h>
 #include <vga.h>
 
+
+static void write_string(const char *str) {
+	const char *p = str;
+	while (*p != '\0') {
+		vga_write_char(*p);
+		p++;
+	}
+}
+
 void kprintf(const char *fmt, ...) {
 	const char *p = fmt;
 	char **args = (char **) &fmt;
@@ -42,7 +51,7 @@ void kprintf(const char *fmt, ...) {
 			case 'i':
 				iarg = (int) *args;
 				int_to_ascii(buf, 256, 10, iarg);
-				kprintf(buf);
+				write_string(buf);
 				args++;
 				break;
 			case '%':
@@ -50,7 +59,7 @@ void kprintf(const char *fmt, ...) {
 				break;
 			case 's':
 				sarg = (char *) *args;
-				kprintf(sarg);
+				write_string(sarg);
 				args++;
 				break;
 			}
