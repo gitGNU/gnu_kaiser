@@ -85,7 +85,7 @@ void vga_write_char(int c) {
 /* Set the position to write to next on screen.
  * Returns 1 if successful, 0 if x or y (or both), are out of range. */
 int vga_set_pos(uint16_t x, uint16_t y) {
-	if (x > columns || y > lines)
+	if (x >= columns || y >= lines)
 		return 0;
 	xpos = x;
 	ypos = y;
@@ -95,7 +95,7 @@ int vga_set_pos(uint16_t x, uint16_t y) {
 /* Write a char to a specific location on screen.
  * Returns 1 if successful, 0 if x or y (or both), are out of range. */
 int vga_set_char(int c, uint16_t x, uint16_t y) {
-	if (x > columns || y > lines)
+	if (x >= columns || y >= lines)
 		return 0;
 	*(video + (x + y * columns) * 2) = c & 0xFF;
 	*(video + (x + y * columns) * 2 + 1) = attribute;
@@ -110,9 +110,16 @@ void vga_set_foreground_colour(uint8_t colour) {
 
 void vga_set_background_colour(uint8_t colour) {
 	colour <<= 4;		/* move the value to where we need it */
-	colour &= 0xF0;		/* clear the last 4 bits of colour */
 	attribute &= 0x0F;	/* clear the first 4 bits of attribute */
 	attribute |= colour;	/* assign the first 4 bits of colour to the
 				 * first 4 bits of attribute */
+}
+
+uint8_t vga_get_foreground_colour(void) {
+	return ((attribute << 4) >> 4);
+}
+
+uint8_t vga_get_background_colour(void) {
+	return (attribute >> 4);
 }
 
