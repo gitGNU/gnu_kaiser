@@ -49,5 +49,6 @@ void vga_set_foreground_colour(uint8_t);
 void vga_set_background_colour(uint8_t);
 uint8_t vga_get_foreground_colour(void);
 uint8_t vga_get_background_colour(void);
+void vga_scroll(void);
 
 #endif /* __VGA_H__ */

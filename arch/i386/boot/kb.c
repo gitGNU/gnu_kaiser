@@ -42,7 +42,11 @@ void keyboard_handler(stack_rep_t *rep){
 	key = read_byte(0x60);
 	if(key&0x80){
 	} else {
-		kprintf("%d pressed\n", keyboard_map[key]);
+		/* prettification */
+		kprintf("\r                              "
+				"                              "
+				"                    "
+				"\r%d pressed\n", keyboard_map[key]);
 	}
 }
 

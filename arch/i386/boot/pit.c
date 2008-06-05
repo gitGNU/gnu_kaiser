@@ -29,7 +29,7 @@ int pit_ticks = 0;
 void timer_handler(stack_rep_t *r){
 	pit_ticks++;
 	if(!(pit_ticks%100)){
-		kprintf("%d seconds passed\r", pit_ticks/100);
+		kprintf("\r%d seconds passed", pit_ticks/100);
 	}
 }
 

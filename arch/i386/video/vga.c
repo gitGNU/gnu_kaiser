@@ -44,11 +44,8 @@ void vga_init(void) {
 
 /* Clear the screen contents are reset x and y positions. */
 void vga_clear_screen(void) {
-	int i;
-
-	for (i = 0; i < (columns * lines) * 2; i++)
-		*(video + i) = 0;
-	xpos = ypos = 0;
+	memset (video, 0, columns * lines * 2);
+	ypos = xpos = 0;
 }
 
 void vga_write_char(int c) {
@@ -62,7 +59,7 @@ void vga_write_char(int c) {
 		xpos = 0;
 		ypos++;
 		if (ypos >= lines)
-			ypos = 0;
+			vga_scroll();
 		if (c == '\n')
 			return;
 	}
@@ -71,13 +68,18 @@ void vga_write_char(int c) {
 			if (columns - xpos < TAB_SIZE) {
 				xpos = 0;
 				ypos++;
+				/* ought to do the check here too */
+				if (ypos >= lines)
+					vga_scroll();
 				break;
 			}
 			vga_write_char(' ');
 		}
 	else {
-		*(video + (xpos + ypos * columns) * 2) = c & 0xFF;
-		*(video + (xpos + ypos * columns) * 2 + 1) = attribute;
+		/* foo[x] looks cleaner IMO also the implied cast
+			made the mask redundant */
+		video[(xpos + ypos * columns) * 2] = c;
+		video[(xpos + ypos * columns) * 2 + 1] = attribute;
 		xpos++;
 	}
 }
@@ -97,29 +99,40 @@ int vga_set_pos(uint16_t x, uint16_t y) {
 int vga_set_char(int c, uint16_t x, uint16_t y) {
 	if (x >= columns || y >= lines)
 		return 0;
-	*(video + (x + y * columns) * 2) = c & 0xFF;
-	*(video + (x + y * columns) * 2 + 1) = attribute;
+	video[(x + y * columns) * 2] = c;
+	video[(x + y * columns) * 2 + 1] = attribute;
 	return 1;
 }
 
+/* Oliver, your ideas of bitwise order are backwards to the rest of us
+ * 	bit 0, the first bit, is the least significant
+ * 	bit 7, the highest bit in a byte, the most significant
+ * 	this is the case here in arch/i386 at least ;)
+ */
 void vga_set_foreground_colour(uint8_t colour) {
-	colour &= 0x0F;		/* clear the first 4 bits of colour */
-	attribute &= 0xF0;	/* clear the last 4 bits of attribute */
-	attribute |= colour;	/* assign the last 4 bits of colour to the last */
+	/* foreground goes in the lower attribute nibble */
+	attribute = (attribute & 0xF0) | (colour & 0x0F);
 }
 
 void vga_set_background_colour(uint8_t colour) {
-	colour <<= 4;		/* move the value to where we need it */
-	attribute &= 0x0F;	/* clear the first 4 bits of attribute */
-	attribute |= colour;	/* assign the first 4 bits of colour to the
-				 * first 4 bits of attribute */
+	/* background goes in the higher attribute nibble */
+	attribute = (attribute & 0x0F) | (colour << 4);
 }
 
+/* Oliver, were you high when you wrote this?
+	The implied cast will cut off the higher bits */
 uint8_t vga_get_foreground_colour(void) {
-	return ((attribute << 4) >> 4);
+	return attribute;
 }
 
 uint8_t vga_get_background_colour(void) {
 	return (attribute >> 4);
 }
 
+/* Temporary prettification function */
+void vga_scroll(void) {
+	ypos--;
+	/* memcpy is ok since we're copying backwards... */
+	memcpy (video, video + columns * 2, columns * (lines - 1) * 2);
+	memset (video + columns * (lines - 1) * 2, 0, columns * 2);
+}
