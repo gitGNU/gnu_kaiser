@@ -70,6 +70,9 @@ void init(unsigned long magic, unsigned long addr) {
 	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
 	
 	__asm__ __volatile__("sti");
-	for(;;);
+	while (1) {
+		/* we can simply halt here to wait for interrupts */
+		__asm__ __volatile__("hlt");
+	}
 }
 

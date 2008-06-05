@@ -34,6 +34,7 @@ void timer_handler(stack_rep_t *r){
 }
 
 void timer_install(){
+	/* NB: this code is fine in qemu, bochs' timer is broken */
 	uint32_t time = PIT_FREQUENCY / WANTED_FREQUENCY;  /* Inaccuracy in division! */
 	send_byte(PIT_COMMAND_REGISTER, 0x36); /*generates a square wave without sending BCD data*/
 	send_byte(PIT_CHANNEL1, time & 0xFF);
