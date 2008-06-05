@@ -131,6 +131,6 @@ uint8_t vga_get_background_colour(void) {
 void vga_scroll(void) {
 	ypos--;
 	/* memcpy is ok since we're copying backwards... */
-	memcpy (video, video + columns * 2, columns * (lines - 1) * 2);
-	memset (video + columns * (lines - 1) * 2, 0, columns * 2);
+	memcpy(video, video + columns * 2, columns * (lines - 1) * 2);
+	memset(video + columns * (lines - 1) * 2, 0, columns * 2);
 }
