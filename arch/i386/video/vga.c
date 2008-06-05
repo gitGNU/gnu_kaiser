@@ -44,7 +44,7 @@ void vga_init(void) {
 
 /* Clear the screen contents are reset x and y positions. */
 void vga_clear_screen(void) {
-	memset (video, 0, columns * lines * 2);
+	memset(video, 0, columns * lines * 2);
 	ypos = xpos = 0;
 }
 
@@ -119,10 +119,8 @@ void vga_set_background_colour(uint8_t colour) {
 	attribute = (attribute & 0x0F) | (colour << 4);
 }
 
-/* Oliver, were you high when you wrote this?
-	The implied cast will cut off the higher bits */
 uint8_t vga_get_foreground_colour(void) {
-	return attribute;
+	return (attribute & 0x0F);
 }
 
 uint8_t vga_get_background_colour(void) {
