@@ -37,6 +37,7 @@ void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, ui
 void gdt_install(){
 	gdt_pointer.limit = (sizeof(gdt_entry_t) * 3) - 1;
 	gdt_pointer.base = (uint32_t)&gdt;
+	/* Null entry */
 	gdt_set_gate(0, 0, 0, 0, 0);
 	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);

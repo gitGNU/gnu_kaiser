@@ -24,7 +24,7 @@
 #include <asm/stddef.h>
 
 #define WANTED_FREQUENCY 100  /* 100Hz */
-#define PIT_FREQUENCY 1193182 /* rounded up from 1193181.666 Hz */
+#define PIT_FREQUENCY 1193182 /* rounded up from 1193181.666 Hz can we be nicer here? */
 #define PIT_COMMAND_REGISTER 0x43
 #define PIT_CHANNEL1 0x40
 #define PIT_CHANNEL2 0x41

@@ -20,6 +20,10 @@
 
 #include <lib/string.h>
 
+/*
+ * We make no guarantee these algorithms are correct since ignite played with them >_>
+ */
+
 unsigned int strlen (const char *s) {
 	const char *p = s;
 

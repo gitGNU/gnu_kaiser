@@ -56,6 +56,7 @@ unsigned char *exception_text[] = { /* Exception messages table */
 };
 
 void isr_install(){
+	/* Install all of our ISRs onto their IDT numbers */
 	idt_set_gate(0, (unsigned)isr0, 0x08, 0x8E);
 	idt_set_gate(1, (unsigned)isr1, 0x08, 0x8E);
 	idt_set_gate(2, (unsigned)isr2, 0x08, 0x8E);
@@ -91,8 +92,7 @@ void isr_install(){
 }
 
 void fault_handler(stack_rep_t *rep){
-	if(rep->int_no < 32){ /* Not kernel defined? */
+	if(rep->int_no < 32) /* Not kernel defined? */
 		kprintf("Exception, Number: %d, Message: %s\n", rep->int_no, exception_text[rep->int_no]);
-	}
 	__asm__("hlt"); /*just hlt the CPU for now*/
 }

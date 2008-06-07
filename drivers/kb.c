@@ -23,6 +23,7 @@
 #include <lib/kprintf.h>
 #include <irq.h>
 
+/* A look-up table for all of our keypress values */
 unsigned char keyboard_map[128] = {
 	KB_ERROR, KB_ESCAPE,
 	'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
@@ -40,8 +41,9 @@ unsigned char keyboard_map[128] = {
 void keyboard_handler(stack_rep_t *rep){
 	uint8_t key;
 	key = read_byte(0x60);
-	if(key&0x80){
+	if(key&0x80){ /* Key released */
 	} else {
+		/* Key pressed */
 		/* prettification */
 		kprintf("\r                              "
 				"                              "
@@ -51,6 +53,7 @@ void keyboard_handler(stack_rep_t *rep){
 }
 
 void keyboard_install(){
+	/* Install the keyboard to IRQ #1 */
         irq_create_handler(1, keyboard_handler);
 }
 

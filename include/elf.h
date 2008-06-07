@@ -1,5 +1,24 @@
-/* COPYRIGHT NOTICE NEEDS ADDING */
+/*
+ * elf.h - ELF header
+ *
+ * Copyright (C) 2008 John 'Ykstort' Doyle
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
+/* I assume you wrote this Ykstort, if you didn't can you update it please? */
 #ifndef __ELF_H__
 #define	__ELF_H__
 
@@ -10,8 +29,7 @@ typedef unsigned int	uint32_t;
 
 #define EI_NIDENT (16)
 
-typedef struct
-{
+typedef struct {
   unsigned char	e_ident[EI_NIDENT];	/* Magic number and other info */
   uint16_t	e_type;			/* Object file type */
   uint16_t	e_machine;		/* Architecture */
@@ -30,8 +48,7 @@ typedef struct
 
 /* Program segment header.  */
 
-typedef struct
-{
+typedef struct {
   uint32_t	p_type;			/* Segment type */
   uint32_t	p_offset;		/* Segment file offset */
   uint32_t	p_vaddr;		/* Segment virtual address */

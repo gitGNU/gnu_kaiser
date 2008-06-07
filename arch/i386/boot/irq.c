@@ -61,7 +61,8 @@ void irq_remap(){
 
 void irq_install(){
 	irq_remap();
-	idt_set_gate(32, (unsigned)irq0, 0x08, 0x8E); /* same as for isr */
+	/* Install the IRQs onto the different idt numbers */
+	idt_set_gate(32, (unsigned)irq0, 0x08, 0x8E);
 	idt_set_gate(33, (unsigned)irq1, 0x08, 0x8E);
 	idt_set_gate(34, (unsigned)irq2, 0x08, 0x8E);
 	idt_set_gate(35, (unsigned)irq3, 0x08, 0x8E);
@@ -87,8 +88,7 @@ void irq_handler(stack_rep_t *rep){
 		handler(rep);
 	}
 	/*if it was from the slave we have to do extra work*/
-	if(rep->int_no > 39){
+	if(rep->int_no > 39)
 		send_byte(SLAVE_PIC, EOI_PIC);/*send EOI to slave*/
-	}
 	send_byte(MASTER_PIC, EOI_PIC); /*send EOI to master*/
 }
