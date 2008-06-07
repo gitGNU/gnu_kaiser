@@ -73,17 +73,20 @@ void kprintf(const char *fmt, ...) {
 				}
 				else {
 					reset_colour = 1;
-					vga_set_foreground_colour((uint8_t) *args);
-					vga_set_background_colour((uint8_t) *args);
+					if ((int) *args > 0)
+						vga_set_foreground_colour((uint8_t) *args);
+					args++;
+					if ((int) *args > 0)
+						vga_set_background_colour((uint8_t) *args);
 					args++;
 				}
 				break;
 			}
 		}
-		if (reset_colour == 1) {
-			vga_set_foreground_colour(orig_fg_clr);
-			vga_set_background_colour(orig_bg_clr);
-		}
+	}
+	if (reset_colour == 1) {
+		vga_set_foreground_colour(orig_fg_clr);
+		vga_set_background_colour(orig_bg_clr);
 	}
 }
 

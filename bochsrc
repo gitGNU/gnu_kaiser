@@ -28,7 +28,7 @@ cpu: count=1, ips=2000000
 #text_snapshot_check: 0
 mouse: enabled=0
 private_colormap: enabled=0
-clock: sync=none, time0=local
+clock: sync=realtime, time0=local
 ne2k: enabled=0
 pnic: enabled=0
 # no loader

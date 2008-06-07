@@ -27,9 +27,6 @@
 #include <pit.h>
 #include <kb.h>
 
-#define PRINT_COLOUR_CHANGE(msg, start, delta) vga_set_foreground_colour(delta);\
-			     kprintf(msg);\
-			     vga_set_foreground_colour(start)
 /*
  * This whole file really needs over-hauling with a new way to
  * start the whole boot procedure, our ideas so far have been
@@ -40,7 +37,6 @@
  */
 void init(unsigned long magic, unsigned long addr) {
 	multiboot_info_t *mbi;
-	char buf[4];
 	mbi = (multiboot_info_t *)addr;
 
 	/* Initialise the VGA system and clear the screen */
@@ -54,29 +50,27 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Initialising GDT:\t");
 	gdt_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Initialising IDT:\t");
 	idt_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Initialising ISRs:\t");
 	isr_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Initialising IRQs:\t");
 	irq_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Installing system clock:\t");
 	timer_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
-	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
-
-	kprintf("%khai, I'm blue%k\n", VGA_COLOUR_LIGHT_BLUE);
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 	while (1) {
