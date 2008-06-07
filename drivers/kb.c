@@ -22,6 +22,7 @@
 #include <isr.h>
 #include <lib/kprintf.h>
 #include <irq.h>
+#include <vga.h>
 
 /* A look-up table for all of our keypress values */
 unsigned char keyboard_map[128] = {
@@ -42,13 +43,10 @@ void keyboard_handler(stack_rep_t *rep){
 	uint8_t key;
 	key = read_byte(0x60);
 	if(key&0x80){ /* Key released */
+		key ^= 0x80;
 	} else {
 		/* Key pressed */
-		/* prettification */
-		kprintf("\r                              "
-				"                              "
-				"                    "
-				"\r%d pressed\n", keyboard_map[key]);
+		vga_write_char(keyboard_map[key]);
 	}
 }
 
