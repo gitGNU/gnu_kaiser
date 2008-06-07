@@ -73,6 +73,7 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
+	beep();
 	while (1) {
 		/* we can simply halt here to wait for interrupts */
 		__asm__ __volatile__("hlt");

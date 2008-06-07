@@ -23,8 +23,8 @@
 #include <isr.h>
 #include <asm/stddef.h>
 
-#define WANTED_FREQUENCY 100  /* 100Hz */
-#define PIT_FREQUENCY 1193182 /* rounded up from 1193181.666 Hz can we be nicer here? */
+#define PIT_INTERRUPT_FREQUENCY 100  /* 100Hz */
+#define PIT_CORE_FREQUENCY 1193182 /* rounded up from 1193181.666 Hz can we be nicer here? */
 #define PIT_COMMAND_REGISTER 0x43
 #define PIT_CHANNEL1 0x40
 #define PIT_CHANNEL2 0x41
@@ -32,5 +32,9 @@
 
 void timer_install();
 void timer_handler(stack_rep_t *);
+void play_sound(uint32_t);
+void stop_sound();
+void beep();
+void timer_swait(uint32_t);
 
 #endif

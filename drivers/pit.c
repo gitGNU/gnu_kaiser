@@ -30,12 +30,43 @@ void timer_handler(stack_rep_t *r){
 	pit_ticks++;
 }
 
+void timer_swait(uint32_t seconds){
+	uint32_t dticks;
+	dticks = pit_ticks + (seconds*PIT_INTERRUPT_FREQUENCY);
+	while(pit_ticks < dticks);
+}
+
 void timer_install(){
-	/* NB: this code is fine in qemu, bochs' timer is broken */
-	uint32_t time = PIT_FREQUENCY / WANTED_FREQUENCY;  /* Inaccuracy in division! Any way to sort this out? */
+	uint32_t time = PIT_CORE_FREQUENCY / PIT_INTERRUPT_FREQUENCY;
+	/* Inaccuracy in division! Any way to sort this out? */
 	send_byte(PIT_COMMAND_REGISTER, 0x36); /*generates a square wave without sending BCD data*/
 	send_byte(PIT_CHANNEL1, time & 0xFF);
 	send_byte(PIT_CHANNEL1, (time >> 8));
 	irq_create_handler(0, timer_handler);
 }
 
+void play_sound(uint32_t frequency){
+	uint32_t freq;
+	freq = PIT_CORE_FREQUENCY / frequency;
+	/* Set our frequency */
+	send_byte(0x43, 0xb6);
+	send_byte(PIT_CHANNEL3, (uint8_t)freq);
+	send_byte(PIT_CHANNEL3, (uint8_t)(freq >> 8));
+
+	uint8_t tmp;
+	tmp - read_byte(0x61);
+	if(tmp != (tmp|3)){
+		send_byte(0x61, tmp|3);
+	}
+}
+
+void stop_sound(){
+	uint8_t tmp = read_byte(0x61) & 0xFC;
+	send_byte(0x61, tmp);
+}
+
+void beep(){
+	play_sound(1000);
+	timer_swait(10);
+	stop_sound();
+}
