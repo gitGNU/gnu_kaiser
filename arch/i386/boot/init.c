@@ -68,7 +68,9 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
 	PRINT_COLOUR_CHANGE("[ok]\n", VGA_COLOUR_BROWN, VGA_COLOUR_LIGHT_GREEN);
-	
+
+	kprintf("%khai, I'm blue%k\n", VGA_COLOUR_LIGHT_BLUE);
+
 	__asm__ __volatile__("sti");
 	for(;;);
 }

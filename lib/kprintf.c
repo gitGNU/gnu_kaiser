@@ -35,6 +35,9 @@ void kprintf(const char *fmt, ...) {
 	const char *p = fmt;
 	char **args = (char **) &fmt;
 	char c;
+	uint8_t orig_fg_clr = vga_get_foreground_colour();
+	uint8_t orig_bg_clr = vga_get_background_colour();
+	int reset_colour = 0;
 	args++;
 
 	while ((c = *p++) != '\0') {
@@ -62,7 +65,24 @@ void kprintf(const char *fmt, ...) {
 				write_string(sarg);
 				args++;
 				break;
+			case 'k':
+				if (reset_colour) {
+					reset_colour = 0;
+					vga_set_foreground_colour(orig_fg_clr);
+					vga_set_background_colour(orig_bg_clr);
+				}
+				else {
+					reset_colour = 1;
+					vga_set_foreground_colour((uint8_t) *args);
+					vga_set_background_colour((uint8_t) *args);
+					args++;
+				}
+				break;
 			}
+		}
+		if (reset_colour == 1) {
+			vga_set_foreground_colour(orig_fg_clr);
+			vga_set_background_colour(orig_bg_clr);
 		}
 	}
 }
