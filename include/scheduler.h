@@ -40,8 +40,8 @@ struct task {
 };
 typedef struct task task_t;
 
-void sched_invoke (void);
-void run_task (task_t * t);
-int schedule (task_t *t);
+void sched_invoke(void);
+void run_task(task_t * t);
+int schedule(task_t *t);
 
 #endif /* !__SCHEDULER_H__ */

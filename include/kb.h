@@ -24,7 +24,7 @@
 #define P_CAPSLOCK(status)	((status)&0x80 ? 1:0)
 #include <isr.h>
 #include <asm/stddef.h>
-
+/* These numbers are purely made up, are they good enough? */
 #define KB_ERROR 128
 #define KB_ESCAPE 27
 #define KB_LEFT_CONTROL 129

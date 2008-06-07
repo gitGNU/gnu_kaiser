@@ -17,9 +17,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+/*
+ * The above copyright notice is invalid given the 0 amount of original
+ * content within this file, shall we remove it for now before we do any
+ * work on this, or perhaps keep it for later?
+ */
+
 #ifndef __VFS_HEADER__
 #define __VFS_HEADER__
-
-
 
 #endif

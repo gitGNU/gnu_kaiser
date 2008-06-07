@@ -40,7 +40,11 @@ idt_load:
 .global isr20, isr21, isr22, isr23, isr24, isr25, isr26, isr27, isr28, isr29
 .global isr30, isr31
 
-/* This is so much code duplication is makes me want to cry */
+/*
+ * This is so much code duplication is makes me want to cry
+ * we're just registering all the ISRs with their unique
+ * vector ID
+ */
 
 isr0:
 	cli
@@ -199,7 +203,7 @@ isr31:
 
 /* Phew, that's over with! */
 .extern fault_handler /* In our isr.c file */
-isr_common: /* all we do here is build out lovely struct for fault_handler */
+isr_common:
 	pusha
 	push %ds /* store all of these for later then overwrite them */
 	push %es
