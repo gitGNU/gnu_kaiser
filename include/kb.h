@@ -27,10 +27,10 @@
 /* These numbers are purely made up, are they good enough? */
 #define KB_ERROR 128
 #define KB_ESCAPE 27
-#define KB_LEFT_CONTROL 129
+#define KB_CTRL 129
 #define KB_LEFT_SHIFT 130
 #define KB_RIGHT_SHIFT 131
-#define KB_LEFT_ALT 132
+#define KB_ALT 132
 #define KB_CAPS_LOCK 133
 #define KB_F1 134
 #define KB_F2 135
@@ -55,7 +55,7 @@
 #define KB_PAGE_DOWN 154
 #define KB_INS 155
 #define KB_DEL 156
-#define KB_ALT_SYSRQ 157
+#define KB_ALT_GR 157
 #define KB_BLANK 158
 #define KB_F11 159
 #define KB_F12 160
@@ -70,8 +70,8 @@ struct keyboard_status {
 	 *
 	 * 0,1,2 = {caps,num,scroll}lock
 	 * 3,4   = left/right shift
-	 * 5,6   = left/right ctrl
-	 * 7     = alt
+	 * 5     = ctrl
+	 * 6,7   = alt/altgr
 	 * 8     = super
 	 *
 	 */
