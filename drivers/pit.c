@@ -54,7 +54,7 @@ void play_sound(uint32_t frequency){
 	send_byte(PIT_CHANNEL3, (uint8_t)(freq >> 8));
 
 	uint8_t tmp;
-	tmp - read_byte(0x61);
+	tmp = read_byte(0x61);
 	if(tmp != (tmp|3)){
 		send_byte(0x61, tmp|3);
 	}
