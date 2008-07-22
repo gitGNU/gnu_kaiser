@@ -1,0 +1,16 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: Kaiser
+version: "0.3"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: Kaiser
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.1"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-07-22 10:43:52.464919 Z
+    - Andrew Etches <seadog@mehmoo.com>
+    - created
+    - First real release of Kaiser with decent functionality

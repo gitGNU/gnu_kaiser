@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add mm/paging
+desc: Add memory management and paging to the kernel
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-22 10:46:31.346215 Z
+references: []
+
+id: 6dab0652607eb7360e4c5a31eb2a3777f89692d4
+log_events: 
+- - 2008-07-22 10:46:32.731279 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

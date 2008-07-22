@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: TTY driver
+desc: |-
+  Create a TTY driver on top of our vga driver to all multiple terminals and
+  other goodness.
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-22 10:50:00.265297 Z
+references: []
+
+id: 3eb9beacbd50cb2e0c331d59ef1a285e249c3635
+log_events: 
+- - 2008-07-22 10:50:01.246476 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

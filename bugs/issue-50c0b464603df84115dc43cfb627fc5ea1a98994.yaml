@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Write linker script
+desc: |-
+  Write a linker script for kaiser in order to allow us to place various things
+  in a certain place during the linking stage
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-22 10:44:47.754332 Z
+references: []
+
+id: 50c0b464603df84115dc43cfb627fc5ea1a98994
+log_events: 
+- - 2008-07-22 10:44:51.598138 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

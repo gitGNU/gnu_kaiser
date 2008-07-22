@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Device driver loader and abstraction
+desc: |-
+  We need some method of loading device drivers, i.e vga and hard drives in a generic and
+  easy to adapt method.
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-07-22 10:47:20.985310 Z
+references: []
+
+id: d75dfa4977e4fa176bc1e4063986e6caaaeacc51
+log_events: 
+- - 2008-07-22 10:47:21.948803 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
