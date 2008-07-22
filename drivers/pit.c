@@ -23,6 +23,7 @@
 #include <irq.h>
 #include <pit.h>
 #include <lib/kprintf.h>
+#include <procio.h>
 
 int pit_ticks = 0;
 

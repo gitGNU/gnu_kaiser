@@ -74,10 +74,10 @@ void kprintf(const char *fmt, ...) {
 				else {
 					reset_colour = 1;
 					if ((int) *args > 0)
-						vga_set_foreground_colour((uint8_t) *args);
+						vga_set_foreground_colour((uint8_t)(int)*args);
 					args++;
 					if ((int) *args > 0)
-						vga_set_background_colour((uint8_t) *args);
+						vga_set_background_colour((uint8_t)(int)*args);
 					args++;
 				}
 				break;

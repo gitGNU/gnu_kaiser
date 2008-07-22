@@ -26,6 +26,7 @@
 #include <isr.h>
 #include <pit.h>
 #include <kb.h>
+#include <irq.h>
 
 /*
  * This whole file really needs over-hauling with a new way to

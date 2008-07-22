@@ -19,6 +19,7 @@
  */
 #include <vga.h>
 #include <asm/stddef.h> /* XXX: stddef.h may not reside in asm in the future */
+#include <lib/string.h>
 
 #define TAB_SIZE 8 /* XXX: This could possibly be made dynamic */
 
@@ -44,13 +45,11 @@ void vga_init(void) {
 
 /* Clear the screen contents are reset x and y positions. */
 void vga_clear_screen(void) {
-	memset(video, 0, columns * lines * 2);
+	memset((unsigned char *)video, 0, columns * lines * 2);
 	ypos = xpos = 0;
 }
 
 void vga_write_char(int c) {
-	int i;
-
 	if (c == '\r') {
 		xpos = 0;
 		return;
@@ -131,6 +130,6 @@ uint8_t vga_get_background_colour(void) {
 void vga_scroll(void) {
 	ypos--;
 	/* memcpy is ok since we're copying backwards... */
-	memcpy(video, video + columns * 2, columns * (lines - 1) * 2);
-	memset(video + columns * (lines - 1) * 2, 0, columns * 2);
+	memcpy((unsigned char *)video, (unsigned char *)video + columns * 2, columns * (lines - 1) * 2);
+	memset((unsigned char *)video + columns * (lines - 1) * 2, 0, columns * 2);
 }

@@ -19,8 +19,10 @@
  */
 
 #include <isr.h>
+#include <idt.h>
+#include <lib/kprintf.h>
 
-unsigned char *exception_text[] = { /* Exception messages table */
+char *exception_text[] = { /* Exception messages table */
 /*0*/   "Division Error",
 /*1*/   "Debug",
 /*2*/   "NMI",

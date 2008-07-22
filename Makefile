@@ -7,7 +7,7 @@ ARCH=$(shell uname -m | \
 	sed s/i.86/i386/)
 BUILTINS=lib/built-in.o kern/built-in.o arch/i386/video/built-in.o drivers/built-in.o
 INCLUDE=$(PWD)/include
-CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -O0 -ffreestanding
+CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -O0 -ffreestanding -Wall
 ASFLAGS=$(CFLAGS)
 SYMLINK=ln -s
 

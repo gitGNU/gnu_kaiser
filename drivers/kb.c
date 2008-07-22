@@ -23,6 +23,7 @@
 #include <lib/kprintf.h>
 #include <irq.h>
 #include <vga.h>
+#include <procio.h>
 
 /* A look-up table for all of our keypress values */
 unsigned char keyboard_map[128] = {
