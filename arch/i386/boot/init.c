@@ -37,6 +37,7 @@
  * having to edit this file constantly
  */
 void init(unsigned long magic, unsigned long addr) {
+	/* we need to check our magic flags and things here really */
 	multiboot_info_t *mbi;
 	mbi = (multiboot_info_t *)addr;
 
