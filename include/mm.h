@@ -20,7 +20,7 @@
  
 #ifndef __MM_H__
 #define __MM_H__
-#define MM_BASE   0x400000    /* 4MB */
+#define MM_BASE   0x9E000
 #define PAGE_SZ   4096      /* 4KiB pages */
 #define PG_BOUND  0x00100000    /* 1MB page group boundary */
 #define VM_BASE   0xc0000000
@@ -30,7 +30,8 @@
 #define MM_FLAG_ALLOCD  (1 << 0)
 #ifndef __ASM__
 #undef MM_BASE
-#define MM_BASE    (mm_pgroup_t *)0x400000 /* 4MB */
+/* #define MM_BASE    (mm_pgroup_t *)0x400000 */
+#define MM_BASE	   (mm_pgroup_t *)0x9E000
 /* non ASM stuff goes here */
 
 typedef struct mm_pgroup mm_pgroup_t;
