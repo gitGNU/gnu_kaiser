@@ -22,11 +22,12 @@
 #include <errno.h>
 #include <lib/string.h>
 #include <asm/stddef.h>
- 
+#include <lib/kprintf.h> 
+
 unsigned int highmem;
 
 void *__mm_pagedir (void) {
-        long *ret;
+        int *ret;
         __asm__ ("mov %%cr3, %0" : "=a" (ret));
         return ret;
 }
@@ -47,9 +48,12 @@ int __mm_highmem (void) {
 void mm_init () {
 	mm_pgroup_t *pg;
 	mm_mmap_t *mem;
- 
+
 	pg = MM_BASE;
+	/*PAGE FAULT HERE*/
 	memset (pg, 0, PAGE_SZ); /* zero the pagegroup */
+	/*THIS CAUSES PAGEFAULTS*/
+
 	pg->pg_flags |= PG_FLAG_BASE; /* set the pagegroup base flag */
 	/* fill in first mmap entry (counts free space) */
 	mem = (mm_mmap_t *)(++pg);

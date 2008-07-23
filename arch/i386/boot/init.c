@@ -80,6 +80,8 @@ void init(unsigned long magic, unsigned long addr) {
 	init_paging();
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
+	mm_init();
+
 	__asm__ __volatile__("sti"); /* Start interrupts */
 	beep();
 	while (1) {
