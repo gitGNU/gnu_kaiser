@@ -27,6 +27,8 @@
 #include <pit.h>
 #include <kb.h>
 #include <irq.h>
+#include <page.h>
+#include <mm.h>
 
 /*
  * This whole file really needs over-hauling with a new way to
@@ -72,6 +74,10 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+
+	kprintf("Initialising paging:\t");
+	init_paging();
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
