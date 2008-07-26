@@ -30,6 +30,7 @@
 #include <page.h>
 #include <mm.h>
 #include <kmalloc.h>
+#include <kheap.h>
 
 /*
  * This whole file really needs over-hauling with a new way to

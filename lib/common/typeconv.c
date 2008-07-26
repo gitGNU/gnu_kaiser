@@ -70,3 +70,14 @@ int int_to_ascii(char *buf, size_t buflen, int base, int32_t num) {
 	return 1;
 }
 
+char *int_to_hex(uint32_t x) {
+	static char buf[16];
+	char *hexChars = "0123456789ABCDEF";
+	uint8_t idx = sizeof(buf);
+	buf[15] = '\0';
+	while (x) {
+		buf[--idx] = hexChars[x % 16];
+		x >>= 4;
+	}
+	return buf + idx;
+}

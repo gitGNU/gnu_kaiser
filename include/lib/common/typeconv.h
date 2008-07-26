@@ -24,6 +24,7 @@
 #include <asm/stddef.h>
 
 int int_to_ascii(char *buf, size_t buflen, int base, int32_t num);
+char *int_to_hex(uint32_t x);
 
 #endif /* !__TYPECONV_H__ */
 

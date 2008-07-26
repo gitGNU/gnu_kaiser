@@ -9,7 +9,9 @@
 FILES = \
 scheduler.c \
 procio.c \
+kheap.c \
 kmalloc.c \
+ordered_array.c \
 vfs/vfs.c            
 
 # we may need to mod this a little later so it's possible

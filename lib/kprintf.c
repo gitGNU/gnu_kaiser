@@ -57,6 +57,18 @@ void kprintf(const char *fmt, ...) {
 				write_string(buf);
 				args++;
 				break;
+			case 'u':
+				iarg = (unsigned int)*args;
+				int_to_ascii(buf, 256, 10, iarg);
+				write_string(buf);
+				args++;
+				break;
+			case 'x':
+				iarg = (int)*args;
+				write_string("0x");
+				write_string(int_to_hex(iarg));
+				args++;
+				break;
 			case '%':
 				vga_write_char(c);
 				break;

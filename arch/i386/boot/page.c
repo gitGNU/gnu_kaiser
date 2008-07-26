@@ -24,6 +24,9 @@
 #include <asm/stddef.h>
 #include <lib/string.h>
 #include <lib/kprintf.h>
+#include <kheap.h>
+
+extern heap_t *kheap;
 
 /* first, let's sort out our bitmap */
 
@@ -86,6 +89,7 @@ void free_frame(page_t *page){
 void init_paging(){
 	uint32_t mem_end_page = 0x1000000;
 	number_frames = mem_end_page / 0x1000;
+	frames = (uint32_t *)kmalloc(INDEX_FROM_BIT(number_frames));
 	memset(frames, 0, INDEX_FROM_BIT(number_frames));
 	
 	kernel_directory = (page_directory_t *)kmalloc_a(sizeof(page_directory_t));
@@ -93,11 +97,18 @@ void init_paging(){
 	current_directory = kernel_directory;
 
 	int i=0;
-	while(i<start_address){
+	for(i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += 0x1000)
+		get_page(i, 1, kernel_directory);
+	i = 0;
+	while(i<start_address+0x1000){
 		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 		i += 0x1000;
 	}
+	
+	for (i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += 0x1000)
+		alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 	switch_page_directory(kernel_directory);
+	kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 
 void switch_page_directory(page_directory_t *directory){
