@@ -18,34 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-.global read_cr0, write_cr0, read_cr3, write_cr3
-
-read_cr0:
-	mov %cr0, %eax
-	ret
-
-read_cr3:
-	mov %cr3, %eax
-	ret
-
-write_cr0:
-	push %ebp
-	mov %esp, %ebp
-	add $8, %ebp
-	mov (%ebp), %eax
-	mov %eax, %cr0
-	pop %ebp
-	ret
-
-write_cr3:
-	push %ebp
-	mov %esp, %ebp
-	add $8, %ebp
-	mov (%ebp), %eax
-	mov %eax, %cr3
-	pop %ebp
-	ret
-
 .global gdt_flush, idt_load
 .extern gdt_pointer, idt_pointer
 gdt_flush:
@@ -69,167 +41,56 @@ idt_load:
 .global isr30, isr31
 
 /*
- * This is so much code duplication is makes me want to cry
- * we're just registering all the ISRs with their unique
+ * We're just registering all the ISRs with their unique
  * vector ID
  */
 
-isr0:
-	cli
-	push $0
-	push $0
-	jmp isr_common
-isr1:
-	cli
-	push $0
-	push $1
-	jmp isr_common
-isr2:
-        cli
-        push $0
-        push $2
-        jmp isr_common
-isr3:
-        cli
-        push $0
-        push $3
-        jmp isr_common
-isr4:
-        cli
-        push $0
-        push $4
-        jmp isr_common
-isr5:
-        cli
-        push $0
-        push $5
-        jmp isr_common
-isr6:
-        cli
-        push $0
-        push $6
-        jmp isr_common
-isr7:
-        cli
-        push $0
-        push $7
-        jmp isr_common
-isr8:
-	cli
-	push $8
-	jmp isr_common
-isr9:
-        cli
-        push $0
-        push $9
-        jmp isr_common
-isr10:
-	cli
-	push $10
-	jmp isr_common
-isr11:
-	cli
-	push $11
-	jmp isr_common
-isr12:
-	cli
-	push $12
-	jmp isr_common
-isr13:
-	cli
-	push $13
-	jmp isr_common
-isr14:
-	cli
-	push $14
-	jmp isr_common
-isr15:
-	cli
-	push $0
-	push $15
-	jmp isr_common
-isr16:
-	cli
-	push $0
-	push $16
-	jmp isr_common
-isr17:
-        cli
-        push $0
-        push $17
-        jmp isr_common
-isr18:
-        cli
-        push $0
-        push $18
-        jmp isr_common
-isr19:
-        cli
-        push $0
-        push $19
-        jmp isr_common
-isr20:
-        cli
-        push $0
-        push $20
-        jmp isr_common
-isr21:
-        cli
-        push $0
-        push $21
-        jmp isr_common
-isr22:
-        cli
-        push $0
-        push $22
-        jmp isr_common
-isr23:
-        cli
-        push $0
-        push $23
-        jmp isr_common
-isr24:
-        cli
-        push $0
-        push $24
-        jmp isr_common
-isr25:
-        cli
-        push $0
-        push $25
-        jmp isr_common
-isr26:
-        cli
-        push $0
-        push $25
-        jmp isr_common
-isr27:
-        cli
-        push $0
-        push $27
-        jmp isr_common
-isr28:
-        cli
-        push $0
-        push $28
-        jmp isr_common
-isr29:
-        cli
-        push $0
-        push $29
-        jmp isr_common
-isr30:
-        cli
-        push $0
-        push $30
-        jmp isr_common
-isr31:
-        cli
-        push $0
-        push $31
-        jmp isr_common
+#define ISR_QUIRK(x) \
+	isr##x: \
+		cli; \
+		push $0; \
+		push $##x; \
+		jmp isr_common
 
-/* Phew, that's over with! */
+#define ISR(x) \
+	isr##x: \
+		cli; \
+		push $##x; \
+		jmp isr_common
+
+ISR_QUIRK(0);
+ISR_QUIRK(1);
+ISR_QUIRK(2);
+ISR_QUIRK(3);
+ISR_QUIRK(4);
+ISR_QUIRK(5);
+ISR_QUIRK(6);
+ISR_QUIRK(7);
+ISR(8);
+ISR(9);
+ISR(10);
+ISR(11);
+ISR(12);
+ISR(13);
+ISR(14);
+ISR_QUIRK(15);
+ISR_QUIRK(16);
+ISR_QUIRK(17);
+ISR_QUIRK(18);
+ISR_QUIRK(19);
+ISR_QUIRK(20);
+ISR_QUIRK(21);
+ISR_QUIRK(22);
+ISR_QUIRK(23);
+ISR_QUIRK(24);
+ISR_QUIRK(25);
+ISR_QUIRK(26);
+ISR_QUIRK(27);
+ISR_QUIRK(28);
+ISR_QUIRK(29);
+ISR_QUIRK(30);
+ISR_QUIRK(31);
+
 .extern fault_handler /* In our isr.c file */
 isr_common:
 	pusha
@@ -258,86 +119,29 @@ isr_common:
 .global irq0,  irq1,  irq2,  irq3,  irq4,  irq5, irq6, irq7, irq8, irq9
 .global irq10, irq11, irq12, irq13, irq14, irq15
 
-irq0:
-        cli
-        push $0
-        push $32
-        jmp irq_common
-irq1:
-        cli
-        push $0
-        push $33
-        jmp irq_common
-irq2:
-        cli
-        push $0
-        push $33
-        jmp irq_common
-irq3:
-        cli
-        push $0
-        push $34
-        jmp irq_common
-irq4:
-        cli
-        push $0
-        push $35
-        jmp irq_common
-irq5:
-        cli
-        push $0
-        push $36
-        jmp irq_common
-irq6:
-	cli
-	push $0
-	push $37
+#define IRQ(x,y) \
+irq##x: \
+	cli;\
+	push $0;\
+	push $##y;\
 	jmp irq_common
-irq7:
-        cli
-        push $0
-        push $38
-        jmp irq_common
-irq8:
-        cli
-        push $0
-        push $39
-        jmp irq_common
-irq9:
-        cli
-        push $0
-        push $40
-        jmp irq_common
-irq10:
-        cli
-        push $0
-        push $41
-        jmp irq_common
-irq11:
-        cli
-        push $0
-        push $42
-        jmp irq_common
-irq12:
-        cli
-        push $0
-        push $43
-        jmp irq_common
-irq13:
-        cli
-        push $0
-        push $44
-        jmp irq_common
-irq14:
-        cli
-        push $0
-        push $45
-        jmp irq_common
-irq15:
-        cli
-        push $0
-        push $46
-        jmp irq_common
+
+IRQ(0, 32);
+IRQ(1, 33);
+IRQ(2, 34);
+IRQ(3, 35);
+IRQ(4, 36);
+IRQ(5, 37);
+IRQ(6, 38);
+IRQ(7, 39);
+IRQ(8, 40);
+IRQ(9, 41);
+IRQ(10, 42);
+IRQ(11, 43);
+IRQ(12, 44);
+IRQ(13, 45);
+IRQ(14, 46);
+IRQ(15, 47);
 
 .extern irq_handler
 irq_common: /* same as the ISR version but calling a different routine... */
