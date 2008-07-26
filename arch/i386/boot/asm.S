@@ -28,7 +28,8 @@ gdt_flush:
 	mov %ax, %fs
 	mov %ax, %gs
 	mov %ax, %ss
-	/* We need a far jump here! */
+	jmp %cs:flush /* far jmp */
+flush:
 	ret
 
 idt_load:
