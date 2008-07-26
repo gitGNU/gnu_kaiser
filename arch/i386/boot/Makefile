@@ -4,7 +4,7 @@
 # notice and this notice are preserved.
 
 KERN=kaiser
-KERN_OBJS=multiboot.o init.o kern.o gdt.o idt.o isr.o irq.o page.o asm.o mm.o
+KERN_OBJS=multiboot.o init.o kern.o gdt.o idt.o isr.o irq.o page.o asm.o
 all: kernel
 clean:
 	$(RM) *.o *.bin $(KERN)
@@ -12,7 +12,7 @@ clean:
 kernel: $(KERN)
 
 kaiser: $(KERN_OBJS)
-	$(LD) -Ttext 0x100000 -s $^ -o $@
+	$(LD) $(LDFLAGS) $^ -o $@
 
 multiboot.o: multiboot.S $(INCLUDE)/multiboot.h
 
@@ -31,8 +31,6 @@ irq.o: irq.c
 pit.o: pit.c
 
 kb.o: kb.c
-
-mm.o: mm.c
 
 page.o: page.c
 

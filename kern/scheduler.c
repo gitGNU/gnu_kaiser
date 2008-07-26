@@ -19,13 +19,11 @@
  */ 
 
 #include <scheduler.h>
+#include <kmalloc.h>
 #include <errno.h>
 #define HACK
 #ifdef HACK
 #define MA_KERN 0
-void *kmalloc (unsigned int x, int y) {
-	return (void *) PTR_ERR (ENOMEM);
-}
 
 void context_switch (struct task *t) {
 }
@@ -46,7 +44,7 @@ int schedule (task_t *t) {
 	link_t *taskl;
 
 	t->timeslice = GENERIC_TIMESLICE;
-	taskl = kmalloc (sizeof (*taskl), MA_KERN);
+	taskl = kmalloc (sizeof (*taskl));
 	if (PTR_ISERR (taskl))
 		return -ERR_PTR (taskl);
 	taskl->task = t;

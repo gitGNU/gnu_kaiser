@@ -10,8 +10,9 @@ INCLUDE=$(PWD)/include
 CFLAGS= -I$(INCLUDE) -nostdlib -nostdinc -O0 -ffreestanding -Wall -Wextra
 ASFLAGS=$(CFLAGS)
 SYMLINK=ln -s
+LDFLAGS=-T../../../link.ld
 
-export ARCH INCLUDE CFLAGS ASFLAGS SYMLINK
+export ARCH INCLUDE CFLAGS ASFLAGS SYMLINK LDFLAGS
 
 all: bootstrap arch/$(ARCH)/boot/kern.o
 	$(MAKE) all   -C fs

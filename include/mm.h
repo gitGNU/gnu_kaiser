@@ -20,19 +20,6 @@
  
 #ifndef __MM_H__
 #define __MM_H__
-#define MM_BASE   0x9E000
-#define PAGE_SZ   4096      /* 4KiB pages */
-#define PG_BOUND  0x00100000    /* 1MB page group boundary */
-#define VM_BASE   0xc0000000
-#define PG_SZ    (PG_BOUND / PAGE_SZ)  /* size in pages */
-#define PG_FLAG_BASE  (1 << 0)
-#define PG_FLAG_FULL  (1 << 1)
-#define MM_FLAG_ALLOCD  (1 << 0)
-#ifndef __ASM__
-#undef MM_BASE
-/* #define MM_BASE    (mm_pgroup_t *)0x400000 */
-#define MM_BASE	   (mm_pgroup_t *)0x9E000
-/* non ASM stuff goes here */
 
 typedef struct mm_pgroup mm_pgroup_t;
 typedef struct mm_mmap mm_mmap_t;
@@ -56,12 +43,4 @@ void *mm_alloc (void *, unsigned short);
 
 mm_pgroup_t *mm_pgalloc (void);
 
-static void __mm_flag_if_full (mm_pgroup_t *);
-void *__mm_pagedir (void);
-
-int __mm_paging (void);
-
-int __mm_highmem (void);
-
-#endif /* __ASM__ */
 #endif /* __MM_H__ */

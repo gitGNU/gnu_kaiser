@@ -23,6 +23,10 @@
 
 #define NULL	((void *) 0)
 
+/*this needs to be moved*/
+#define PANIC(a) kprintf(a); \
+		 __asm__("hlt")
+
 /* Common data types */
 typedef char int8_t;
 typedef unsigned char uint8_t;

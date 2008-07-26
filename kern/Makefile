@@ -9,6 +9,7 @@
 FILES = \
 scheduler.c \
 procio.c \
+kmalloc.c \
 vfs/vfs.c            
 
 # we may need to mod this a little later so it's possible
