@@ -5,8 +5,8 @@ type: :task
 component: Kaiser
 release: "0.1"
 reporter: Andrew Etches <seadog@mehmoo.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-22 10:46:31.346215 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Andrew Etches <seadog@mehmoo.com>
   - commented
   - Only the heap left to create!
+- - 2008-07-26 23:51:17.680385 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - closed issue with disposition fixed
+  - Completed, need to redo the algo
