@@ -83,11 +83,6 @@ void init(unsigned long magic, unsigned long addr) {
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 
-	/* let's test our paging setup */
-	kprintf("Page fault time!\n");
-	uint32_t *ptr = (uint32_t *)0xA0000000;
-	uint32_t do_page_fault = *ptr;
-
 	while (1) {
 		/* we can simply halt here to wait for interrupts */
 		__asm__ __volatile__("hlt");
