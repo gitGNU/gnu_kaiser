@@ -7,8 +7,8 @@ type: :task
 component: Kaiser
 release: "0.1"
 reporter: Andrew Etches <seadog@mehmoo.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-07-22 10:44:47.754332 Z
 references: []
 
@@ -17,4 +17,8 @@ log_events:
 - - 2008-07-22 10:44:51.598138 Z
   - Andrew Etches <seadog@mehmoo.com>
   - created
+  - ""
+- - 2008-07-26 15:44:44.236041 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - closed issue with disposition fixed
   - ""
