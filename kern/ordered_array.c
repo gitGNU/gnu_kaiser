@@ -9,7 +9,7 @@ char standard_lessthan_predicate(void *a, void *b){
 
 ordered_array_t create_ordered_array(uint32_t max_size, lessthan_predicate_t less_than){
 	ordered_array_t retval;
-	retval.array = (void *)kmalloc(max_size*sizeof(void *));
+	retval.array = kmalloc(max_size*sizeof(void *));
 	memset(retval.array, 0, max_size*sizeof(void *));
 	retval.size = 0;
 	retval.max_size = max_size;

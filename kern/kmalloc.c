@@ -7,7 +7,7 @@
 
 extern uint32_t end; /* defined in the linker script */
 extern heap_t *kheap;
-uint32_t start_address = &end;
+uint32_t start_address = (uint32_t)&end;
 
 void *kmalloc_internal(uint32_t size, int align, uint32_t *physical){
 	if(kheap != 0){
