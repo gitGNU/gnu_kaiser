@@ -2,6 +2,7 @@
 #include <asm/stddef.h>
 #include <kmalloc.h>
 #include <page.h>
+#include <ordered_array.h>
 
 heap_t *kheap = 0;
 extern page_directory_t *kernel_directory;
@@ -13,7 +14,7 @@ static int32_t find_smallest_hole(uint32_t size, uint8_t page_align, heap_t *hea
 		if(page_align){
 			uint32_t location = (uint32_t)header;
 			int32_t offset = 0;
-			if((location + sizeof(header_t)) & 0xFFFFF000 != 0)
+			if(((location + sizeof(header_t)) & 0xFFFFF000) != 0)
 				offset = 0x1000 - (location + sizeof(header_t))%0x1000;
 			int32_t hole_size = (int32_t)header->size - offset;
 			if(hole_size >= (int32_t)size)
@@ -33,9 +34,9 @@ static int32_t header_t_less_than(void *a, void *b){
 
 heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervisor, uint8_t readonly){
 	heap_t *heap = (heap_t *)kmalloc(sizeof(heap_t));
-	heap->index = place_ordered_array( (void *)start, HEAP_INDEX_SIZE, &header_t_less_than);
+	heap->index = place_ordered_array((void *)start, HEAP_INDEX_SIZE, &header_t_less_than);
 	start += sizeof(void *)*HEAP_INDEX_SIZE;
-	if(start & 0xFFFFF000 != 0){
+	if((start & 0xFFFFF000) != 0){
 		start &= 0xFFFFF000;
 		start += 0x1000;
 	}
@@ -54,7 +55,7 @@ heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervis
 }
 
 static uint32_t contract(uint32_t new_size, heap_t *heap){
-	if (new_size&0xFFFFF000 != 0){
+	if ((new_size&0xFFFFF000) != 0){
 		new_size &= 0xFFFFF000;
 		new_size += 0x1000;
 	}
@@ -70,8 +71,8 @@ static uint32_t contract(uint32_t new_size, heap_t *heap){
 	return new_size;
 }
 
-static uint32_t expand(uint32_t new_size, heap_t *heap){
-	if (new_size&0xFFFFF000 != 0){
+static void expand(uint32_t new_size, heap_t *heap){
+	if ((new_size&0xFFFFF000) != 0){
 		new_size &= 0xFFFFF000;
 		new_size += 0x1000;
 	}
@@ -82,20 +83,21 @@ static uint32_t expand(uint32_t new_size, heap_t *heap){
 		i += 0x1000;
 	}
 	heap->end_address = heap->start_address + new_size;
+
 }
 
 void *alloc(uint32_t size, uint8_t page_align, heap_t *heap){
 	uint32_t new_size = size + sizeof(header_t) + sizeof(footer_t);
-	uint32_t i = find_smallest_hole(new_size, page_align, heap);
+	int32_t i = find_smallest_hole(new_size, page_align, heap);
 	if(i == -1){
 		uint32_t old_length = heap->end_address - heap->start_address;
 		uint32_t old_end_address = heap->end_address;
 		expand(old_length+new_size, heap);
 		uint32_t new_length = heap->end_address - heap->start_address;
 		i = 0;
-		uint32_t index = -1;
+		int32_t index = -1;
 		uint32_t value = 0x0;
-		while(i < heap->index.size){
+		while((uint32_t)i < heap->index.size){
 			uint32_t temp = (uint32_t)lookup_ordered_array(i, &heap->index);
 			if(temp > value){
 				value = temp;

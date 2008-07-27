@@ -50,9 +50,12 @@ struct page_directory {
 void init_paging();
 void switch_page_directory(page_directory_t *new);
 page_t *get_page(uint32_t address, uint8_t make, page_directory_t *dir);
+void free_frame(page_t *);
+void alloc_frame(page_t *, int, int);
 
 page_directory_t *kernel_directory;
 page_directory_t *current_directory;
+
 
 extern page_directory_t *kernel_directory;
 extern page_directory_t *current_directory;

@@ -25,7 +25,7 @@
 #include <lib/kprintf.h>
 #include <procio.h>
 
-int pit_ticks = 0;
+uint32_t pit_ticks = 0;
 
 void timer_handler(stack_rep_t *r){
 	pit_ticks++;

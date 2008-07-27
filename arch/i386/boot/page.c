@@ -62,6 +62,7 @@ static uint32_t first_frame(){
 			}
 		}
 	}
+	return 0;
 }
 
 void alloc_frame(page_t *page, int is_kernel, int is_writeable){
@@ -70,7 +71,7 @@ void alloc_frame(page_t *page, int is_kernel, int is_writeable){
 	uint32_t index = first_frame();
 	if(index == (uint32_t)-1)
 		/* NO FREE FRAMES! we need to panic! */
-		;
+		__asm__ __volatile__("hlt");
 	set_frame(index*0x1000);
 	page->present = 1;
 	page->rw = (is_writeable)?1:0;
@@ -96,7 +97,7 @@ void init_paging(){
 	memset(kernel_directory, 0, sizeof(page_directory_t));
 	current_directory = kernel_directory;
 
-	int i=0;
+	uint32_t i=0;
 	for(i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += 0x1000)
 		get_page(i, 1, kernel_directory);
 	i = 0;

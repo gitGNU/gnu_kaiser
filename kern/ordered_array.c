@@ -1,6 +1,7 @@
 #include <ordered_array.h>
 #include <asm/stddef.h>
 #include <lib/string.h>
+#include <kmalloc.h>
 
 char standard_lessthan_predicate(void *a, void *b){
 	return (a<b)?1:0;
