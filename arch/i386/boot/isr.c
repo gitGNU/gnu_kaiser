@@ -97,11 +97,11 @@ void fault_handler(stack_rep_t *r){
 	if(r->int_no < 32){ /* Not kernel defined? */
 		kprintf("Exception, Number: %d, Message: %s\n", (unsigned)r->int_no, exception_text[r->int_no]);
 		kprintf("Contents of registers:\n");
-		kprintf("ds: %d, es: %d, fs: %d, es: %d\n", r->ds, r->es, r->fs, r->gs);
-		kprintf("eax: %d, ebx: %d, ecx: %d, edx: %d\n", r->eax, r->ebx, r->ecx, r->edx);
-		kprintf("esp: %d, ebp: %d, esi: %d, edi: %d\n", r->esp, r->ebp, r->esi, r->edi);
-		kprintf("err: %d, eip: %d, cs: %d\n", r->err_no, r->eip, r->cs);
-		kprintf("eflags: %d, useresp: %d, ss: %d\n", r->eflags, r->useresp, r->ss);
+		kprintf("ds: %x, es: %x, fs: %x, es: %x\n", r->ds, r->es, r->fs, r->gs);
+		kprintf("eax: %x, ebx: %x, ecx: %x, edx: %x\n", r->eax, r->ebx, r->ecx, r->edx);
+		kprintf("esp: %x, ebp: %x, esi: %x, edi: %x\n", r->esp, r->ebp, r->esi, r->edi);
+		kprintf("err: %x, eip: %x, cs: %x\n", r->err_no, r->eip, r->cs);
+		kprintf("eflags: %x, useresp: %x, ss: %x\n", r->eflags, r->useresp, r->ss);
 	}
 	__asm__("hlt"); /*just hlt the CPU for now*/
 }

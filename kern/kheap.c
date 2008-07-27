@@ -33,7 +33,7 @@ static int32_t header_t_less_than(void *a, void *b){
 }
 
 heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervisor, uint8_t readonly){
-	heap_t *heap = (heap_t *)kmalloc(sizeof(heap_t));
+	heap_t *heap = kmalloc(sizeof(heap_t));
 	heap->index = place_ordered_array((void *)start, HEAP_INDEX_SIZE, &header_t_less_than);
 	start += sizeof(void *)*HEAP_INDEX_SIZE;
 	if((start & 0xFFFFF000) != 0){
