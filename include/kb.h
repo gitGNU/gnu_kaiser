@@ -61,7 +61,7 @@
 #define KB_F12 160
 
 
-struct keyboard_status {
+typedef struct keyboard_status {
 	/*
 	 * Any keys which have memory need to be kept track of
 	 *
@@ -76,7 +76,7 @@ struct keyboard_status {
 	 *
 	 */
 	uint16_t status;
-};
+} keyboard_status_t;
 
 void keyboard_handler(stack_rep_t *);
 void keyboard_install();

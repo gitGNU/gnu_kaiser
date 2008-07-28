@@ -24,6 +24,7 @@
 #include <irq.h>
 #include <vga.h>
 #include <procio.h>
+#include <kmalloc.h>
 
 /* A look-up table for all of our keypress values */
 unsigned char keyboard_map[128] = {
@@ -40,7 +41,7 @@ unsigned char keyboard_map[128] = {
 	KB_DEL, KB_ALT_GR, 0, KB_BLANK, KB_F11, KB_F12,
 };
 
-struct keyboard_status kb_status;
+keyboard_status_t *kb_status;
 
 void keyboard_handler(stack_rep_t *rep){
 	uint8_t key;
@@ -50,49 +51,53 @@ void keyboard_handler(stack_rep_t *rep){
 		key = keyboard_map[key];
 		switch(key){
 			case KB_LEFT_SHIFT:
-				kb_status.status ^= 0x08;
+				kb_status->status ^= 0x08;
 				break;
 			case KB_RIGHT_SHIFT:
-				kb_status.status ^= 0x10;
+				kb_status->status ^= 0x10;
 				break;
 			case KB_ALT:
-				kb_status.status ^= 0x40;
+				kb_status->status ^= 0x40;
 				break;
 			case KB_ALT_GR:
-				kb_status.status ^= 0x80;
+				kb_status->status ^= 0x80;
 				break;
 			case KB_CTRL:
-				kb_status.status ^= 0x20;
+				kb_status->status ^= 0x20;
 				break;
 		}
 	} else {
 		key = keyboard_map[key];
 		switch(key){
 			case KB_LEFT_SHIFT:
-				kb_status.status |= 0x08;
+				kb_status->status |= 0x08;
 				break;
 			case KB_RIGHT_SHIFT:
-				kb_status.status |= 0x10;
+				kb_status->status |= 0x10;
 				break;
 			case KB_ALT:
-				kb_status.status |= 0x40;
+				kb_status->status |= 0x40;
 				break;
 			case KB_ALT_GR:
-				kb_status.status |= 0x80;
+				kb_status->status |= 0x80;
 				break;
 			case KB_CTRL:
-				kb_status.status |= 0x20;
+				kb_status->status |= 0x20;
 				break;
 			case KB_NUM_LOCK:
-				kb_status.status ^= 0x02;
+				kb_status->status ^= 0x02;
 				break;
 			case KB_SCROLL_LOCK:
-				kb_status.status ^= 0x04;
+				kb_status->status ^= 0x04;
 				break;
 			case KB_CAPS_LOCK:
-				kb_status.status ^= 0x01;
+				kb_status->status ^= 0x01;
 				break;
 			default:{
+				/*
+				 * we need to handle our special keys here before shipping it elsewhere
+				 * vga_write_char has to go, it's stupid to make the keyboard so specific
+				 */
 				vga_write_char(key);
 			}
 		}
@@ -102,5 +107,6 @@ void keyboard_handler(stack_rep_t *rep){
 void keyboard_install(){
 	/* Install the keyboard to IRQ #1 */
         irq_create_handler(1, keyboard_handler);
+	kb_status = kmalloc(sizeof(kb_status));
 }
 
