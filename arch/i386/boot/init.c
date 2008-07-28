@@ -70,16 +70,24 @@ void init(unsigned long magic, unsigned long addr) {
 	irq_install();
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
+	void *prepage = kmalloc(8);
+	kprintf("Pre-paging, pointer: %x\n", prepage);
+	kfree(prepage);
+
+	kprintf("Initialising paging:\t");
+	init_paging();
+	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+
+	void *postpage = kmalloc(8);
+	kprintf("Post-paging, pointer: %x\n", postpage);
+	kfree(postpage);
+
 	kprintf("Installing system clock:\t");
 	timer_install();
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
-
-	kprintf("Initialising paging:\t");
-	init_paging();
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	__asm__ __volatile__("sti"); /* Start interrupts */

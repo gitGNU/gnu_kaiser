@@ -48,5 +48,8 @@ void *kmalloc_ap(uint32_t size, uint32_t *physical){
 }
 
 void kfree(void *p){
-	free(p, kheap);
+	/* we need to be a nop unless the kheap is working */
+	if(kheap != 0)
+		free(p, kheap);
+	return;
 }
