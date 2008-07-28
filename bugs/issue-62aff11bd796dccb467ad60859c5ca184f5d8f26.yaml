@@ -1,0 +1,27 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Abstract keyboard driver
+desc: |-
+  Make the keyboard driver simply pass its input to whoever wants it, perhaps a function pointer that can be
+  set in order for the keyboard to ship its stuff over that
+  
+  The driver also needs to set the LEDs of the keyboard, and it needs to support multiple keyboards (should be simple)
+  and also multiple keymaps (i.e we need to abstract the keymap into some sort of other file or something)
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :in_progress
+disposition: 
+creation_time: 2008-07-28 09:52:14.026360 Z
+references: []
+
+id: 62aff11bd796dccb467ad60859c5ca184f5d8f26
+log_events: 
+- - 2008-07-28 09:52:15.346428 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
+- - 2008-07-28 09:53:54.611605 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - changed status from unstarted to in_progress
+  - ""

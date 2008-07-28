@@ -1,9 +1,8 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
 title: Re-organise build system
 desc: |-
-  Use either autotools, plain old make or some other build system (ft-jam looks good)
-  to allow easier configuration and building of the kernel, and to make it more easily
-  extensible.
+  We really need to redo some of the directory structure because it's really haphazard
+  and we also need to create some sort of configuration interface a la linux
 type: :task
 component: Kaiser
 release: "0.1"
@@ -18,4 +17,8 @@ log_events:
 - - 2008-07-22 10:49:20.001776 Z
   - Andrew Etches <seadog@mehmoo.com>
   - created
+  - ""
+- - 2008-07-28 09:53:34.513470 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - changed description
   - ""
