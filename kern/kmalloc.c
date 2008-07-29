@@ -31,23 +31,23 @@ void *kmalloc_internal(uint32_t size, int align, uint32_t *physical){
 	}
 }
 
-void *kmalloc(uint32_t size){
+inline void *kmalloc(uint32_t size){
 	return kmalloc_internal(size, 0, NULL);
 }
 
-void *kmalloc_a(uint32_t size){
+inline void *kmalloc_a(uint32_t size){
 	return kmalloc_internal(size, 1, NULL);
 }
 
-void *kmalloc_p(uint32_t size, uint32_t *physical){
+inline void *kmalloc_p(uint32_t size, uint32_t *physical){
 	return kmalloc_internal(size, 0, physical);
 }
 
-void *kmalloc_ap(uint32_t size, uint32_t *physical){
+inline void *kmalloc_ap(uint32_t size, uint32_t *physical){
 	return kmalloc_internal(size, 1, physical);
 }
 
-void kfree(void *p){
+inline void kfree(void *p){
 	/* we need to be a nop unless the kheap is working */
 	if(kheap != 0)
 		free(p, kheap);

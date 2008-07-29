@@ -64,7 +64,7 @@ void kprintf(const char *fmt, ...) {
 				args++;
 				break;
 			case 'x':
-				iarg = (int)*args;
+				iarg = (unsigned int)*args;
 				write_string("0x");
 				write_string(int_to_hex(iarg));
 				args++;
