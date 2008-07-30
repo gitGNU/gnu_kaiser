@@ -47,8 +47,7 @@ static void kb_loop(){
 	char a;
 	start:
 	a = read_byte(0x64);
-	a &= 0x02;
-	if(a == 0x02)
+	if(a & 0x02)
 		goto start;
 	return;
 }
