@@ -68,7 +68,7 @@ typedef struct keyboard_status {
 	 * uint16_t status bits:
 	 * 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
 	 *
-	 * 0,1,2 = {caps,num,scroll}lock
+	 * 0,1,2 = {scroll,num,caps}lock
 	 * 3,4   = left/right shift
 	 * 5     = ctrl
 	 * 6,7   = alt/altgr

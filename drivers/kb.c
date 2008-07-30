@@ -43,6 +43,25 @@ unsigned char keyboard_map[128] = {
 
 keyboard_status_t *kb_status;
 
+static void kb_loop(){
+	char a;
+	start:
+	a = read_byte(0x64);
+	a &= 0x02;
+	if(a == 0x02)
+		goto start;
+	return;
+}
+
+static void do_leds(){
+	char status = (kb_status->status & 0x07);
+	kb_loop();
+	send_byte(0x60, 0xED);
+	kb_loop();
+	send_byte(0x60, status);
+	kb_loop();
+}
+
 void keyboard_handler(stack_rep_t *rep){
 	uint8_t key;
 	key = read_byte(0x60);
@@ -86,12 +105,15 @@ void keyboard_handler(stack_rep_t *rep){
 				break;
 			case KB_NUM_LOCK:
 				kb_status->status ^= 0x02;
-				break;
-			case KB_SCROLL_LOCK:
-				kb_status->status ^= 0x04;
+				do_leds();
 				break;
 			case KB_CAPS_LOCK:
+				kb_status->status ^= 0x04;
+				do_leds();
+				break;
+			case KB_SCROLL_LOCK:
 				kb_status->status ^= 0x01;
+				do_leds();
 				break;
 			default:{
 				/*
