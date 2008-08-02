@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: New VGA setup
+desc: Create a new easy to use VGA interface that's documented
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-02 23:54:35.404732 Z
+references: []
+
+id: 75b35af3c8d1bf66653d264f140e69fed2f73e1f
+log_events: 
+- - 2008-08-02 23:54:36.722166 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
