@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create AVL and use instead of ordered array
+desc: Create an AVL to use instead of an ordered array, lookups will be faster as will be insertions and deletions
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-08-23 20:56:57.437921 Z
+references: []
+
+id: 8faa5baedae614b06ab67972a7dd7f98f7d61e4c
+log_events: 
+- - 2008-08-23 20:56:58.735926 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
