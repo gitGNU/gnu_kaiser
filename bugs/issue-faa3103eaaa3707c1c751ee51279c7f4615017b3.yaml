@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Use cdecl for asm functions
+desc: Change our current functions to use cdecl so we can use a stack frame unwinder to debug
+type: :task
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-01 05:41:33.529411 Z
+references: []
+
+id: faa3103eaaa3707c1c751ee51279c7f4615017b3
+log_events: 
+- - 2008-09-01 05:41:34.553208 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
