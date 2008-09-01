@@ -21,6 +21,9 @@
 .global gdt_flush, idt_load
 .extern gdt_pointer, idt_pointer
 gdt_flush:
+	push %ebp
+	mov %esp, %ebp
+
 	lgdt (gdt_pointer)
 	mov $0x10, %ax
 	mov %ax, %ds
@@ -30,10 +33,16 @@ gdt_flush:
 	mov %ax, %ss
 	jmp %cs:flush /* far jmp */
 flush:
+	mov %ebp, %esp
+	pop %ebp
 	ret
 
 idt_load:
+	push %ebp
+	mov %esp, %ebp
 	lidt (idt_pointer)
+	mov %ebp, %esp
+	pop %ebp
 	ret
 
 .global isr0,  isr1,  isr2,  isr3,  isr4,  isr5,  isr6,  isr7,  isr8,  isr9     /* better way? */
