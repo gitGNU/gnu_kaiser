@@ -19,9 +19,8 @@
  */
 
 #ifndef __KB_H__
-#  define __KB_H__
+#define __KB_H__
 
-#define P_CAPSLOCK(status)	((status)&0x80 ? 1:0)
 #include <isr.h>
 #include <asm/stddef.h>
 /* These numbers are purely made up, are they good enough? */
@@ -60,13 +59,27 @@
 #define KB_F11 159
 #define KB_F12 160
 
+#define complement_scroll(x) (x->status ^= 0x01)
+#define complement_num(x)    (x->status ^= 0x02)
+#define complement_caps(x)   (x->status ^= 0x04)
+
+#define set_lshift(x) (x->status |= 0x08)
+#define set_rshift(x) (x->status |= 0x10)
+#define set_ctrl(x)   (x->status |= 0x20)
+#define set_alt(x)    (x->status |= 0x40)
+#define set_altgr(x)  (x->status |= 0x80)
+#define set_super(x)  (x->status |= 0x100)
+
+#define unset_lshift(x) (x->status &= ~(0x08))
+#define unset_rshift(x) (x->status &= ~(0x10))
+#define unset_ctrl(x)   (x->status &= ~(0x20))
+#define unset_alt(x)    (x->status &= ~(0x40))
+#define unset_altgr(x)  (x->status &= ~(0x80))
+#define unset_super(x)  (x->status &= ~(0x100))
 
 typedef struct keyboard_status {
 	/*
 	 * Any keys which have memory need to be kept track of
-	 *
-	 * uint16_t status bits:
-	 * 15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
 	 *
 	 * 0,1,2 = {scroll,num,caps}lock
 	 * 3,4   = left/right shift
@@ -75,7 +88,7 @@ typedef struct keyboard_status {
 	 * 8     = super
 	 *
 	 */
-	uint16_t status;
+	int status;
 } keyboard_status_t;
 
 void keyboard_handler(stack_rep_t *);

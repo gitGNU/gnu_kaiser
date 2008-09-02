@@ -1,7 +1,7 @@
 /*
  * kb.c - keyboard driver code
  *
- * Copyright (C) 2008 John 'Ykstort' Doyle
+ * Copyright (C) 2008 Andrew 'Seadog' Etches
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,49 +69,49 @@ void keyboard_handler(stack_rep_t *rep){
 		key = keyboard_map[key];
 		switch(key){
 			case KB_LEFT_SHIFT:
-				kb_status->status ^= 0x08;
+				unset_lshift(kb_status);
 				break;
 			case KB_RIGHT_SHIFT:
-				kb_status->status ^= 0x10;
+				unset_rshift(kb_status);
 				break;
 			case KB_ALT:
-				kb_status->status ^= 0x40;
+				unset_alt(kb_status);
 				break;
 			case KB_ALT_GR:
-				kb_status->status ^= 0x80;
+				unset_altgr(kb_status);
 				break;
 			case KB_CTRL:
-				kb_status->status ^= 0x20;
+				unset_ctrl(kb_status);
 				break;
 		}
 	} else {
 		key = keyboard_map[key];
 		switch(key){
 			case KB_LEFT_SHIFT:
-				kb_status->status |= 0x08;
+				set_lshift(kb_status);
 				break;
 			case KB_RIGHT_SHIFT:
-				kb_status->status |= 0x10;
+				set_rshift(kb_status);
 				break;
 			case KB_ALT:
-				kb_status->status |= 0x40;
+				set_alt(kb_status);
 				break;
 			case KB_ALT_GR:
-				kb_status->status |= 0x80;
+				set_altgr(kb_status);
 				break;
 			case KB_CTRL:
-				kb_status->status |= 0x20;
+				set_ctrl(kb_status);
 				break;
 			case KB_NUM_LOCK:
-				kb_status->status ^= 0x02;
+				complement_num(kb_status);
 				do_leds();
 				break;
 			case KB_CAPS_LOCK:
-				kb_status->status ^= 0x04;
+				complement_caps(kb_status);
 				do_leds();
 				break;
 			case KB_SCROLL_LOCK:
-				kb_status->status ^= 0x01;
+				complement_scroll(kb_status);
 				do_leds();
 				break;
 			default:{
