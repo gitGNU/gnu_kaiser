@@ -10,7 +10,7 @@ type: :task
 component: Kaiser
 release: "0.1"
 reporter: Andrew Etches <seadog@mehmoo.com>
-status: :in_progress
+status: :paused
 disposition: 
 creation_time: 2008-07-28 09:52:14.026360 Z
 references: []
@@ -24,4 +24,8 @@ log_events:
 - - 2008-07-28 09:53:54.611605 Z
   - Andrew Etches <seadog@mehmoo.com>
   - changed status from unstarted to in_progress
+  - ""
+- - 2008-09-02 05:01:17.525663 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - changed status from in_progress to paused
   - ""
