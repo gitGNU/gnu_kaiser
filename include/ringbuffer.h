@@ -3,8 +3,6 @@
 
 /* simple ring buffer implementation */
 
-#include <stddef.h>
-
 struct ringbuf 
 {
 	size_t size;  /* size of the buffer */
