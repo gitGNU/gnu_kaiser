@@ -43,5 +43,5 @@ void *memcpy (void *_d, const void *_s, int len) {
 	const char *s = _s;
 
 	for (; len; len--, d++)	*d = *(s++);
-	return d;
+	return _d;
 }
