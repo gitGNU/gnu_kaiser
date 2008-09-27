@@ -44,11 +44,7 @@ unsigned char keyboard_map[128] = {
 keyboard_status_t *kb_status;
 
 static void kb_loop(){
-	char a;
-	start:
-	a = read_byte(0x64);
-	if(a & 0x02)
-		goto start;
+	while(read_byte(0x64)&0x02);
 	return;
 }
 
