@@ -4,6 +4,7 @@
 
 /* Unwind the functions called */
 void unwind(void){
+	/* end is defined in our linker script */
   extern uint32_t end;
   end = (uint32_t)&end;
 
