@@ -30,11 +30,11 @@
 
 #include <asm/stddef.h>
 
-typedef struct elf_section_header_table {
-	uint32_t num;
-	uint32_t size;
-	uint32_t addr;
-	uint32_t shndx;
+typedef struct {
+	unsigned long num;
+	unsigned long size;
+	unsigned long addr;
+	unsigned long shndx;
 } elf_section_header_table_t;
 
 typedef struct multiboot_header {
