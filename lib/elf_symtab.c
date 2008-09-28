@@ -14,8 +14,10 @@ void init_symtable(Elf32_Shdr *section_table, int size){
 		if(section_header->sh_type == SHT_SYMTAB){
 			symbol_table = (Elf32_Sym *)section_header->sh_addr;
 			symbol_table_size = section_header->sh_size / sizeof(Elf32_Sym);
-		} else if(section_header->sh_type == SHT_STRTAB)
-			string_table = (char *)section_header->sh_addr;
+		} else if(section_header->sh_type == SHT_STRTAB){
+			string_table = kmalloc(section_header->sh_size);
+			string_table = memcpy(string_table, (char *)section_header->sh_addr, section_header->sh_size);
+		}
 	}
 }
 

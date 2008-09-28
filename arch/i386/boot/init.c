@@ -20,6 +20,7 @@
 
 #include <multiboot.h>
 #include <lib/elf_symtab.h>
+#include <lib/unwind.h>
 #include <vga.h>
 #include <lib/kprintf.h>
 #include <gdt.h>
@@ -43,37 +44,11 @@
  * having to edit this file constantly
  */
 
-void unwind(void){
-	extern uint32_t end;
-	end = (uint32_t)&end;
-
-  int ebp;
-  int return_address;
-  int symtable_entry;
-
-  __asm__ __volatile__("mov %%ebp, %0;" : "=a" (ebp));
-  while(1){
-    return_address = *(int *)(ebp+4);
-    symtable_entry = return_address + *(int *)(return_address-4);
-		if(symtable_entry < 0x100000 || symtable_entry > end)
-			break;
-
-    /* we have the current ebp, let's see what function it referrs to */
-    kprintf("Symtable entry: %x:%s\n", symtable_entry, get_symbol_name((unsigned int)symtable_entry));
-
-    /*get the next ebp */
-    ebp = *(int *)ebp;
-  }
-}	
-
-void panic(void){
-	unwind();
-}
-
 void init(unsigned long magic, unsigned long addr) {
 	/* we need to check our magic flags and things here really */
 	multiboot_info_t *mbi;
 	mbi = (multiboot_info_t *)addr;
+  init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
 
 	/* Initialise the VGA system and clear the screen */
 	vga_init();
@@ -81,9 +56,7 @@ void init(unsigned long magic, unsigned long addr) {
 	vga_set_background_colour(VGA_COLOUR_BLACK);
 	vga_clear_screen();
 
-	init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
-
-	kprintf("%x %s\n", 0x100020, get_symbol_name(0x100020));
+	unwind();
 
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
@@ -126,7 +99,7 @@ void init(unsigned long magic, unsigned long addr) {
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 
-	panic();
+	unwind();
 
 	while (1) {
 		/* we can simply halt here to wait for interrupts */
