@@ -19,10 +19,12 @@
  */
 
 #include <multiboot.h>
+#include <lib/elf_symtab.h>
 #include <vga.h>
 #include <lib/kprintf.h>
 #include <gdt.h>
 #include <idt.h>
+#include <elf.h>
 #include <isr.h>
 #include <pit.h>
 #include <kb.h>
@@ -50,6 +52,8 @@ void init(unsigned long magic, unsigned long addr) {
 	vga_set_foreground_colour(VGA_COLOUR_BROWN);
 	vga_set_background_colour(VGA_COLOUR_BLACK);
 	vga_clear_screen();
+
+	init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
 
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
