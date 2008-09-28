@@ -18,12 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/*
- * The above copyright notice isn't really valid for such a pathetic amount
- * of stuff in this file, can we either add more functionality (later?) or
- * merge this with another file?
- */
-
 #ifndef __KPRINTF_H__
 #define __KPRINTF_H__
 
