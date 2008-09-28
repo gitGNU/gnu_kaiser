@@ -1,6 +1,6 @@
 /* simple ring buffer implementation */
-#include <stddef.h>
-#include "ringbuffer.h"
+#include <kmalloc.h>
+#include <ringbuffer.h>
 
 size_t ringbuf_write(ringbuf_t *rb, const void *d, size_t len)
 {
@@ -64,7 +64,7 @@ ringbuf_t *ringbuf_create(size_t bufsize)
 
 	rb->buffer = kmalloc(bufsize);
 	if(rb->buffer == NULL) {
-		free(rb);
+		kfree(rb);
 		return NULL;
 	}
 
