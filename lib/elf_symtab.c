@@ -1,9 +1,9 @@
 #include <elf.h>
 #include <lib/elf_symtab.h>
 
-static char *string_table;
-static int symbol_table_size;
-static Elf32_Sym *symbol_table;
+int symbol_table_size;
+Elf32_Sym *symbol_table;
+char *string_table;
 
 void init_symtable(Elf32_Shdr *section_table, int size){
 	Elf32_Shdr *section_header;
@@ -27,7 +27,7 @@ char *get_symbol_name(unsigned int symbol_location){
 	for(i=0; i < symbol_table_size; i++){
 		symbol = &symbol_table[i];
 		if(symbol->st_value == symbol_location){
-			retval = &string_table[symbol->st_name];
+			retval = string_table + symbol->st_name;
 		}
 	}
 	return retval;

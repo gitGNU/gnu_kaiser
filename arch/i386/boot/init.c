@@ -45,6 +45,7 @@
 
 void unwind(void){
 	extern uint32_t end;
+	end = (uint32_t)&end;
 
   int ebp;
   int return_address;
@@ -54,13 +55,13 @@ void unwind(void){
   while(1){
     return_address = *(int *)(ebp+4);
     symtable_entry = return_address + *(int *)(return_address-4);
-
-    /* we have the current ebp, let's see what function it referrs to */
-    kprintf("Symtable entry: %x:%s\n", symtable_entry, get_symbol_name(symtable_entry));
-
-    /*get the next ebp */
 		if(symtable_entry < 0x100000 || symtable_entry > end)
 			break;
+
+    /* we have the current ebp, let's see what function it referrs to */
+    kprintf("Symtable entry: %x:%s\n", symtable_entry, get_symbol_name((unsigned int)symtable_entry));
+
+    /*get the next ebp */
     ebp = *(int *)ebp;
   }
 }	
@@ -81,6 +82,8 @@ void init(unsigned long magic, unsigned long addr) {
 	vga_clear_screen();
 
 	init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
+
+	kprintf("%x %s\n", 0x100020, get_symbol_name(0x100020));
 
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
@@ -123,7 +126,7 @@ void init(unsigned long magic, unsigned long addr) {
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 
-//	panic();
+	panic();
 
 	while (1) {
 		/* we can simply halt here to wait for interrupts */
