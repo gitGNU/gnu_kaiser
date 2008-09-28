@@ -3,7 +3,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-OBJS=string.o kprintf.o common.o elf_symtab.o
+OBJS=string.o kprintf.o common.o elf_symtab.o unwind.o
 
 all: built-in.o
 
@@ -19,6 +19,8 @@ string.o: string.c $(INCLUDE)/lib/string.h
 kprintf.o: kprintf.c
 
 elf_symtab.o: elf_symtab.c
+
+unwind.o: unwind.c
 
 common.o:
 	$(MAKE) all -C common
