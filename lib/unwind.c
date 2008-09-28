@@ -1,6 +1,7 @@
-#include <vga.h>
+#include <lib/kprintf.h>
 #include <asm/stddef.h>
 #include <lib/unwind.h>
+#include <lib/elf_symtab.h>
 
 /* Unwind the functions called */
 void unwind(void){

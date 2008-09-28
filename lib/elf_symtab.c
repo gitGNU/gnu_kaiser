@@ -1,5 +1,7 @@
 #include <elf.h>
 #include <lib/elf_symtab.h>
+#include <lib/string.h>
+#include <kmalloc.h>
 
 int __symbol_table_size;
 Elf32_Sym *__symbol_table;
