@@ -20,12 +20,12 @@
 
 #include <multiboot.h>
 #include <lib/elf_symtab.h>
-#include <lib/unwind.h>
 #include <vga.h>
 #include <lib/kprintf.h>
 #include <gdt.h>
 #include <idt.h>
 #include <elf.h>
+#include <panic.h>
 #include <isr.h>
 #include <pit.h>
 #include <kb.h>
@@ -55,8 +55,6 @@ void init(unsigned long magic, unsigned long addr) {
 	vga_set_foreground_colour(VGA_COLOUR_BROWN);
 	vga_set_background_colour(VGA_COLOUR_BLACK);
 	vga_clear_screen();
-
-	unwind();
 
 	kprintf("Loading Kaiser...\n");
 	kprintf("Initialising components...\n");
@@ -98,8 +96,6 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
-
-	unwind();
 
 	while (1) {
 		/* we can simply halt here to wait for interrupts */

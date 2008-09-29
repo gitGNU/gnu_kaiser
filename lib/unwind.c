@@ -25,6 +25,7 @@
 #include <lib/elf_symtab.h>
 
 void unwind(void){
+	kprintf("Stack trace:\n");
 	/* end is defined in our linker script */
   extern uint32_t end;
   end = (uint32_t)&end;
@@ -46,6 +47,6 @@ void unwind(void){
       break;
 
     /* we have the current ebp, let's see what function it referrs to */
-    kprintf("Symtable entry: %x:%s\n", symtable_entry, get_symbol_name(symtable_entry));
+    kprintf("\t%s\n", get_symbol_name(symtable_entry));
   }
 }
