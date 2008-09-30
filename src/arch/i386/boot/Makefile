@@ -5,6 +5,8 @@
 
 KERN=kaiser
 KERN_OBJS=multiboot.o init.o kern.o gdt.o idt.o isr.o irq.o page.o asm.o
+CP=cp
+
 all: kernel
 clean:
 	$(RM) *.o *.bin $(KERN)
@@ -12,7 +14,8 @@ clean:
 kernel: $(KERN)
 
 kaiser: $(KERN_OBJS)
-	$(LD) $(LDFLAGS) $^ -o $@
+	$(LD) $(LDFLAGS) $^ -o $@;\
+	$(CP) $@ $(BASE)
 
 multiboot.o: multiboot.S $(INCLUDE)/multiboot.h
 

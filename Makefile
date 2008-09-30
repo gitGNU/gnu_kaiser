@@ -3,7 +3,11 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
+BASE=$(PWD)
+export BASE
+
 all:
 	$(MAKE) all   -C src
 clean:
+	$(RM) kaiser
 	$(MAKE) clean	-C src
