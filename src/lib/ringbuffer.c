@@ -1,6 +1,7 @@
 /* simple ring buffer implementation */
 #include <kmalloc.h>
 #include <ringbuffer.h>
+#include <asm/stddef.h>
 
 size_t ringbuf_write(ringbuf_t *rb, const void *d, size_t len)
 {

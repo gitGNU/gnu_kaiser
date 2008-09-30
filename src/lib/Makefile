@@ -3,7 +3,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-OBJS=string.o kprintf.o common.o elf_symtab.o unwind.o
+OBJS=string.o kprintf.o common.o elf_symtab.o unwind.o ringbuffer.o
 
 all: built-in.o
 
@@ -21,6 +21,8 @@ kprintf.o: kprintf.c
 elf_symtab.o: elf_symtab.c
 
 unwind.o: unwind.c
+
+ringbuffer.o: ringbuffer.c
 
 common.o:
 	$(MAKE) all -C common
