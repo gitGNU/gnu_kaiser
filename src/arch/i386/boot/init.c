@@ -34,6 +34,7 @@
 #include <mm.h>
 #include <kmalloc.h>
 #include <kheap.h>
+#include <cpuid.h>
 
 /*
  * This whole file really needs over-hauling with a new way to
@@ -48,12 +49,12 @@ void init(unsigned long magic, unsigned long addr) {
 	/* we need to check our magic flags and things here really */
 	multiboot_info_t *mbi;
 	mbi = (multiboot_info_t *)addr;
-  init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
+	init_symtable((Elf32_Shdr *)mbi->u.elf_sec.addr, mbi->u.elf_sec.num);
 
 	/* Initialise the VGA system and clear the screen */
 	vga_init();
-	vga_set_foreground_colour(VGA_COLOUR_BROWN);
-	vga_set_background_colour(VGA_COLOUR_BLACK);
+	vga_set_foreground_colour(VGA_FG_BROWN);
+	vga_set_background_colour(VGA_BG_BLACK);
 	vga_clear_screen();
 
 	kprintf("Loading Kaiser...\n");
@@ -61,19 +62,19 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Initialising GDT:\t");
 	gdt_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	kprintf("Initialising IDT:\t");
 	idt_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	kprintf("Initialising ISRs:\t");
 	isr_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	kprintf("Initialising IRQs:\t");
 	irq_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	void *prepage = kmalloc(8);
 	kprintf("Pre-paging, pointer: %x\n", prepage);
@@ -81,7 +82,7 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Initialising paging:\t");
 	init_paging();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	void *postpage = kmalloc(8);
 	kprintf("Post-paging, pointer: %x\n", postpage);
@@ -89,11 +90,15 @@ void init(unsigned long magic, unsigned long addr) {
 
 	kprintf("Installing system clock:\t");
 	timer_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
 
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
-	kprintf("%k[ok]\n", VGA_COLOUR_LIGHT_GREEN, -1);
+	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
+
+	char *cpu_vendor = kmalloc(13);
+	kprintf("Detecting CPU vendor:\t");
+	kprintf("%k%s\n", VGA_FG_LIGHT_GREEN, cpuid_get_vendor_string(cpu_vendor));
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 

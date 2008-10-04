@@ -23,22 +23,43 @@
 
 #include <asm/stddef.h>
 
-#define VGA_COLOUR_BLACK 0
-#define VGA_COLOUR_BLUE 1
-#define VGA_COLOUR_GREEN 2
-#define VGA_COLOUR_CYAN 3
-#define VGA_COLOUR_RED 4
-#define VGA_COLOUR_MAGENTA 5
-#define VGA_COLOUR_BROWN 6
-#define VGA_COLOUR_LIGHT_GREY 7
-#define VGA_COLOUR_DARK_GREY 8
-#define VGA_COLOUR_LIGHT_BLUE 9
-#define VGA_COLOUR_LIGHT_GREEN 10
-#define VGA_COLOUR_LIGHT_CYAN 11
-#define VGA_COLOUR_LIGHT_RED 12
-#define VGA_COLOUR_LIGHT_MAGENTA 13
-#define VGA_COLOUR_LIGHT_BROWN 14
-#define VGA_COLOUR_WHITE 15
+#define	VGA_FG_BLACK 0
+#define	VGA_FG_BLUE 1
+#define	VGA_FG_GREEN 2
+#define	VGA_FG_CYAN 3
+#define	VGA_FG_RED 4
+#define	VGA_FG_MAGENTA 5
+#define	VGA_FG_BROWN 6
+#define	VGA_FG_LIGHT_GREY 7
+#define	VGA_FG_DARK_GREY 8
+#define	VGA_FG_LIGHT_BLUE 9
+#define	VGA_FG_LIGHT_GREEN 10
+#define	VGA_FG_LIGHT_CYAN 11
+#define	VGA_FG_LIGHT_RED 12
+#define	VGA_FG_LIGHT_MAGENTA 13
+#define	VGA_FG_LIGHT_BROWN 14
+#define	VGA_FG_WHITE 15
+
+/*
+ * They made me do this, I wanted to use a macro, but ooooooh nooooo, gotta be
+ * an idiot. - Oliver
+ */
+#define	VGA_BG_BLACK					(VGA_FG_BLACK << 4)
+#define	VGA_BG_BLUE						(VGA_FG_BLUE << 4)
+#define	VGA_BG_GREEN					(VGA_FG_GREEN << 4)
+#define	VGA_BG_CYAN						(VGA_FG_CYAN << 4)
+#define	VGA_BG_RED						(VGA_FG_RED << 4)
+#define	VGA_BG_MAGENTA				(VGA_FG_MAGENTA << 4)
+#define	VGA_BG_BROWN					(VGA_FG_BROWN << 4)
+#define	VGA_BG_LIGHT_GREY			(VGA_FG_LIGHT_GREY << 4)
+#define	VGA_BG_DARK_GREY			(VGA_FG_DARK_GREY << 4)
+#define	VGA_BG_LIGHT_BLUE			(VGA_FG_LIGHT_BLUE << 4)
+#define	VGA_BG_LIGHT_GREEN		(VGA_FG_LIGHT_GREEN << 4)
+#define	VGA_BG_LIGHT_CYAN			(VGA_FG_LIGHT_CYAN << 4)
+#define	VGA_BG_LIGHT_RED			(VGA_FG_LIGHT_RED << 4)
+#define	VGA_BG_LIGHT_MAGENTA	(VGA_FG_LIGHT_MAGENTA << 4)
+#define	VGA_BG_LIGHT_BROWN		(VGA_FG_LIGHT_BROWN << 4)
+#define	VGA_BG_WHITE					(VGA_FG_WHITE << 4)
 
 void vga_init(void);
 void vga_clear_screen(void);

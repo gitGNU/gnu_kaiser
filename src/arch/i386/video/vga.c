@@ -115,7 +115,7 @@ void vga_set_foreground_colour(uint8_t colour) {
 
 void vga_set_background_colour(uint8_t colour) {
 	/* background goes in the higher attribute nibble */
-	attribute = (attribute & 0x0F) | (colour << 4);
+	attribute = (attribute & 0x0F) | (colour & 0xF0);
 }
 
 uint8_t vga_get_foreground_colour(void) {
@@ -123,7 +123,7 @@ uint8_t vga_get_foreground_colour(void) {
 }
 
 uint8_t vga_get_background_colour(void) {
-	return (attribute >> 4);
+	return (attribute & 0xF0);
 }
 
 /* Temporary prettification function */

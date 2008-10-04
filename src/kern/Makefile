@@ -12,7 +12,8 @@ procio.c \
 kheap.c \
 kmalloc.c \
 ordered_array.c \
-vfs/vfs.c
+vfs/vfs.c \
+cpuid.c
 
 # we may need to mod this a little later so it's possible
 # to have easier control of what is put into seperate object files

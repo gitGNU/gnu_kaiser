@@ -35,8 +35,7 @@ void kprintf(const char *fmt, ...) {
 	const char *p = fmt;
 	char **args = (char **) &fmt;
 	char c;
-	uint8_t orig_fg_clr = vga_get_foreground_colour();
-	uint8_t orig_bg_clr = vga_get_background_colour();
+	uint8_t orig_clr = vga_get_foreground_colour() | vga_get_background_colour();
 	int reset_colour = 0;
 	args++;
 
@@ -80,16 +79,15 @@ void kprintf(const char *fmt, ...) {
 			case 'k':
 				if (reset_colour) {
 					reset_colour = 0;
-					vga_set_foreground_colour(orig_fg_clr);
-					vga_set_background_colour(orig_bg_clr);
+					vga_set_foreground_colour(orig_clr);
+					vga_set_background_colour(orig_clr);
 				}
 				else {
 					reset_colour = 1;
-					if ((int) *args > 0)
+					if ((int) *args > 0) {
 						vga_set_foreground_colour((uint8_t)(int)*args);
-					args++;
-					if ((int) *args > 0)
-						vga_set_background_colour((uint8_t)(int)*args);
+						vga_set_background_colour(((uint8_t)(int)*args));
+					}
 					args++;
 				}
 				break;
@@ -97,8 +95,8 @@ void kprintf(const char *fmt, ...) {
 		}
 	}
 	if (reset_colour == 1) {
-		vga_set_foreground_colour(orig_fg_clr);
-		vga_set_background_colour(orig_bg_clr);
+		vga_set_foreground_colour(orig_clr);
+		vga_set_background_colour(orig_clr);
 	}
 }
 
