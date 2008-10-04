@@ -62,7 +62,9 @@ void vga_write_char(int c) {
 		if (c == '\n')
 			return;
 	}
-	if (c == '\t')
+	if (c == '\t') {
+		if (xpos == 0)
+			xpos++; /* so we don't neglect the tab when xpos == 0 */
 		while (xpos % TAB_SIZE) {
 			if (columns - xpos < TAB_SIZE) {
 				xpos = 0;
@@ -74,6 +76,7 @@ void vga_write_char(int c) {
 			}
 			vga_write_char(' ');
 		}
+	}
 	else {
 		/* foo[x] looks cleaner IMO also the implied cast
 			made the mask redundant */

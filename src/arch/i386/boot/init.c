@@ -88,6 +88,20 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("Post-paging, pointer: %x\n", postpage);
 	kfree(postpage);
 
+	char *cpu_vendor = kmalloc(13);
+	kprintf("Detecting CPU vendor:\t");
+	kprintf("%k%s\n", VGA_FG_LIGHT_GREEN, cpuid_get_vendor_string(cpu_vendor));
+
+	cpuinfo_t *cpu_info = kmalloc(sizeof(*cpu_info));
+	kprintf("Detecting CPU information:\n");
+	cpuid_get_info(cpu_info);
+	kprintf("\tStepping: %i\n", cpu_info->stepping);
+	kprintf("\tModel: %i\n", cpu_info->model);
+	kprintf("\tFamily: %i\n", cpu_info->family);
+	kprintf("\tType: %i\n", cpu_info->type);
+	kprintf("\tExtended Model: %i\n", cpu_info->ext_model);
+	kprintf("\tExtended Family: %i\n", cpu_info->ext_family);
+
 	kprintf("Installing system clock:\t");
 	timer_install();
 	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
@@ -95,10 +109,6 @@ void init(unsigned long magic, unsigned long addr) {
 	kprintf("Installing keyboard:\t");
 	keyboard_install();
 	kprintf("%k[ok]\n", VGA_FG_LIGHT_GREEN);
-
-	char *cpu_vendor = kmalloc(13);
-	kprintf("Detecting CPU vendor:\t");
-	kprintf("%k%s\n", VGA_FG_LIGHT_GREEN, cpuid_get_vendor_string(cpu_vendor));
 
 	__asm__ __volatile__("sti"); /* Start interrupts */
 

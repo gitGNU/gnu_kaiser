@@ -18,7 +18,14 @@ char *cpuid_get_vendor_string(char *out) {
 	return out;
 }
 
-/*
 void cpuid_get_info(cpuinfo_t *info) {
+	int eax, ebx, ecx, edx;
+	cpuid(1, &eax, &ebx, &ecx, &edx);
+	info->stepping = (0x0000000F & eax);
+	info->model = (0x000000F0 & eax) >> 4;
+	info->family = (0x00000F00 & eax) >> 8;
+	info->type = (0x0000F000 & eax) >> 12;
+	info->ext_model = (0x000F0000 & eax) >> 16;
+	info->ext_family = (0x00F00000 & eax) >> 20;
 }
-*/
+
