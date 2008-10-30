@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Implement VFS
+desc: Implement a VFS
+type: :feature
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-30 20:05:08.577516 Z
+references: []
+
+id: 20801ced605414c7b7375c6fd680c94c85348a13
+log_events: 
+- - 2008-10-30 20:05:09.569593 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

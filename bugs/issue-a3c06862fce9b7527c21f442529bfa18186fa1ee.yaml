@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add device probe
+desc: Add code to probe for cdroms/hard drives and PCI devices
+type: :feature
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-30 20:07:17.248753 Z
+references: []
+
+id: a3c06862fce9b7527c21f442529bfa18186fa1ee
+log_events: 
+- - 2008-10-30 20:07:18.064673 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

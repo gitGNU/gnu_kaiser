@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add usermode / syscalls
+desc: Add usermode / system calls to the kernel
+type: :feature
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-30 20:05:56.737116 Z
+references: []
+
+id: 2a92d43c1cf743ea1f6bd44fbb7a1caa80a818bc
+log_events: 
+- - 2008-10-30 20:05:57.864918 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

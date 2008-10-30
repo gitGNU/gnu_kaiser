@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Multitasking
+desc: Add multitasking support
+type: :feature
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-30 20:05:31.464163 Z
+references: []
+
+id: 7e0b9c8582689bc117d95cb7439b14cad164e950
+log_events: 
+- - 2008-10-30 20:05:32.183391 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add file system
+desc: Add a simple file system to the kernel, perhaps ext2?
+type: :feature
+component: Kaiser
+release: "0.1"
+reporter: Andrew Etches <seadog@mehmoo.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-30 20:06:31.997691 Z
+references: []
+
+id: d381de7ffe06588bee0d7a009501634fd865cc70
+log_events: 
+- - 2008-10-30 20:06:33.180246 Z
+  - Andrew Etches <seadog@mehmoo.com>
+  - created
+  - ""
