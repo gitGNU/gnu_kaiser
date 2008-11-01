@@ -21,7 +21,7 @@
 #include <gdt.h>
 #include <asm/stddef.h>
 
-gdt_entry_t gdt[3];
+gdt_entry_t gdt[5];
 gdt_ptr_t gdt_pointer;
 
 void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran){
@@ -41,5 +41,7 @@ void gdt_install(){
 	gdt_set_gate(0, 0, 0, 0, 0);
 	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
 	gdt_flush();
 }
